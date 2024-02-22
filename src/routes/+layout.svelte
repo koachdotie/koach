@@ -1,7 +1,8 @@
 <script>
 	import '../app.pcss';
 	import { ModeWatcher } from 'mode-watcher';
-	import { Button } from "$lib/components/ui/button";
+	// @ts-ignore - unsure why this is needed but will fix later
+	import { Button } from '$lib/components/ui/button';
 	import Sun from 'lucide-svelte/icons/sun';
 	import Moon from 'lucide-svelte/icons/moon';
 
