@@ -11,6 +11,7 @@
 
 	let items: { href: string; title: string }[];
 	items = [
+		{ href: '/', title: 'Dashboard' },
 		{ href: '/programs', title: 'Programs' },
 		{ href: '/workouts', title: 'Workouts' }
 	];

@@ -1,17 +1,31 @@
 <script lang="ts">
 	// @ts-ignore - ignoring below because of weird import error i dont care to fix rn
-	import { Avatar } from '$lib/components/ui/avatar';
+	import * as Avatar from '$lib/components/ui/avatar';
 	// @ts-ignore
 	import { Button } from '$lib/components/ui/button';
 	// @ts-ignore
-	import { DropdownMenu } from '$lib/components/ui/dropdown-menu';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+
+	import Sun from 'lucide-svelte/icons/sun';
+	import Moon from 'lucide-svelte/icons/moon';
+
+	import { toggleMode } from 'mode-watcher';
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
-		<Button variant="ghost" builders={[builder]} class="relative h-8 w-8 rounded-full">
+		<Button on:click={toggleMode} variant="outline" size="icon">
+			<Sun
+				class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+			/>
+			<Moon
+				class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+			/>
+			<span class="sr-only">Toggle theme</span>
+		</Button>
+
+		<Button variant="ghost" builders={[builder]} class="relative !m-2 h-8 w-8 rounded-full">
 			<Avatar.Root class="h-8 w-8">
-				<Avatar.Image src="/avatars/01.png" alt="@shadcn" />
 				<Avatar.Fallback>SC</Avatar.Fallback>
 			</Avatar.Root>
 		</Button>
@@ -19,8 +33,8 @@
 	<DropdownMenu.Content class="w-56" align="end">
 		<DropdownMenu.Label class="font-normal">
 			<div class="flex flex-col space-y-1">
-				<p class="text-sm font-medium leading-none">shadcn</p>
-				<p class="text-xs leading-none text-muted-foreground">m@example.com</p>
+				<p class="text-sm font-medium leading-none">Bryan Keane</p>
+				<p class="text-xs leading-none text-muted-foreground">bryan@koach.ie</p>
 			</div>
 		</DropdownMenu.Label>
 		<DropdownMenu.Separator />
