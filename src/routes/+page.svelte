@@ -1,1 +1,1 @@
-i am the cool slot
+<span class="m-4">i'm a cool dashboard</span>

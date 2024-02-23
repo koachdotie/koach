@@ -7,7 +7,6 @@
 
 <ModeWatcher />
 
-<!-- Adjusted layout for better responsiveness and fixed sidebar width -->
 <div class="min-h-screen md:flex md:flex-row">
     <div class="border-t bg-background md:w-64"> <!-- Adjust the width as needed -->
         <SideBar />
@@ -21,6 +20,8 @@
                         <!-- <Search /> -->
                         <Navmenu />
                     </div>
+					<div class="overflow-hidden rounded-[0.5rem] border bg-background shadow-xl"></div>
+
                     <slot />
                 </div>
             </div>
