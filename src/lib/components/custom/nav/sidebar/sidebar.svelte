@@ -21,11 +21,6 @@
 		{ href: '/messages', title: 'Messages' }
 	];
 
-	let automation: { href: string; title: string }[] = [
-		{ href: '/programs', title: 'Programs' },
-		{ href: '/workouts', title: 'Workouts' }
-	];
-
 	const [send, receive] = crossfade({
 		duration: 250,
 		easing: cubicInOut
@@ -34,7 +29,7 @@
 
 <div class={cn('border-r pb-12', className)}>
 	<h2
-		class="scroll-m-20 p-4 pb-2 text-3xl mx-2 font-semibold tracking-tight transition-colors first:mt-0"
+		class="mx-2 scroll-m-20 p-4 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
 	>
 		KOACH
 	</h2>
