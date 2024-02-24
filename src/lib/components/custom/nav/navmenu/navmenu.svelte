@@ -54,9 +54,11 @@
 			<DropdownMenu.Item>New Team</DropdownMenu.Item>
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
-		<DropdownMenu.Item>
-			Log out
-			<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
-		</DropdownMenu.Item>
+		<a href="/signup">
+			<DropdownMenu.Item>
+				Sign In
+				<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
+			</DropdownMenu.Item>
+		</a>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
