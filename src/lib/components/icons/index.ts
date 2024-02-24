@@ -24,6 +24,8 @@ import X from "lucide-svelte/icons/x";
 
 import Google from "./google.svelte";
 import type { SvelteComponent } from "svelte";
+import { FacebookIcon } from "lucide-svelte";
+import Apple from "./apple.svelte";
 
 export type Icon = SvelteComponent;
 
@@ -52,4 +54,6 @@ export const Icons = {
 	moon: Moon,
 	laptop: Laptop,
 	google: Google,
+	facebook: FacebookIcon,
+	apple: Apple
 };
