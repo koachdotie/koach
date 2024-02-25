@@ -49,7 +49,7 @@
 					class="underline underline-offset-4 hover:text-primary"
 				>
 					Privacy Policy
-				</a>.
+				</a>
 			</p>
 		</div>
 	</div>

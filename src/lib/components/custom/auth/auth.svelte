@@ -6,10 +6,36 @@
 	// @ts-ignore
 	import { cn } from '$lib/utils.js';
 
+	import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+	import { auth } from '$lib/firebase/firebase.client.js';
+	import { session } from '$lib/firebase/session.js';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
+	import { afterRegister } from '$lib/firebase/helpers/route.helper.js';
 	let className: string | undefined | null = undefined;
 	export { className as class };
-
 	let isLoading = false;
+
+	async function handleGoogleSignIn() {
+		isLoading = true;
+		try {
+			const result = await signInWithPopup(auth, new GoogleAuthProvider());
+			const user = result.user;
+			console.log('User signed in with email:', user.email);
+
+			session.update((currentSession) => ({
+				...currentSession,
+				user,
+				loggedIn: true
+			}));
+
+			afterRegister($page.url, user);
+		} catch (error) {
+			console.error('Error signing in with Google:', error);
+		} finally {
+			isLoading = false;
+		}
+	}
 </script>
 
 <div class={cn('flex justify-center gap-4', className)} {...$$restProps}>
@@ -18,6 +44,7 @@
 		type="button"
 		disabled={isLoading}
 		class="flex h-12 w-12 items-center justify-center"
+		on:click={handleGoogleSignIn}
 	>
 		{#if isLoading}
 			<Icons.spinner class="m-auto animate-spin" style="width: 1rem; height: 1rem;" />
@@ -25,7 +52,6 @@
 			<Icons.google class="m-auto" style="width: 1rem; height: 1rem;" />
 		{/if}
 	</Button>
-
 	<Button
 		variant="disabled"
 		type="button"
@@ -54,11 +80,11 @@
 </div>
 
 <!-- 
-	TODO: Move the below to some other place
-	This should only be on sign up page.
- -->
+TODO: Move the below to some other place
+This should only be on sign up page.
+-->
 <div class="mt-6 text-center">
-	<span class="bg-background px-2 font- text-muted-foreground">
+	<span class="font- bg-background px-2 text-muted-foreground">
 		Already a Koach? <a href="/login" class="text-primary hover:underline">Login</a>
 	</span>
 </div>

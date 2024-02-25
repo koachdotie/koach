@@ -60,6 +60,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"@kinde-oss/kinde-auth-sveltekit": "^1.2.4",
 		"bits-ui": "^0.18.2",
 		"clsx": "^2.1.0",
 		"firebase": "^10.8.0",
