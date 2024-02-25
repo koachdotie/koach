@@ -27,7 +27,7 @@
 	</Button>
 
 	<Button
-		variant="outline"
+		variant="disabled"
 		type="button"
 		disabled={isLoading}
 		class="flex h-12 w-12 items-center justify-center"
@@ -40,7 +40,7 @@
 	</Button>
 
 	<Button
-		variant="outline"
+		variant="disabled"
 		type="button"
 		disabled={isLoading}
 		class="flex h-12 w-12 items-center justify-center"
