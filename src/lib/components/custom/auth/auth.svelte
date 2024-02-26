@@ -20,21 +20,22 @@
 	export { className as class };
 	let isLoading = false;
 
-	async function handleGoogleSignIn() {
+	async function handleSignIn(provider: GoogleAuthProvider) {
 		isLoading = true;
 		try {
 			setPersistence(auth, browserLocalPersistence).then(async () => {
-				const user = await signInWithPopup(auth, new GoogleAuthProvider()).then(
-					(userCredential) => {
-						const retrievedUser = userCredential?.user;
-						session.update((currentSession) => ({
-							...currentSession,
-							retrievedUser,
-							loggedIn: true
-						}));
-						return retrievedUser;
-					}
-				);
+				const user = await signInWithPopup(auth, provider).then((userCredential) => {
+					const retrievedUser = userCredential?.user;
+					session.update((currentSession) => ({
+						...currentSession,
+						retrievedUser,
+						loggedIn: true
+					}));
+					return retrievedUser;
+				});
+
+				const token = await user.getIdToken();
+				document.cookie = `idToken=${token};path=/;max-age=3600;secure`;
 
 				console.log('User signed in with email:', user.email);
 
@@ -54,37 +55,12 @@
 		type="button"
 		disabled={isLoading}
 		class="flex h-12 w-12 items-center justify-center"
-		on:click={handleGoogleSignIn}
+		on:click={() => handleSignIn(new GoogleAuthProvider())}
 	>
 		{#if isLoading}
 			<Icons.spinner class="m-auto animate-spin" style="width: 1rem; height: 1rem;" />
 		{:else}
 			<Icons.google class="m-auto" style="width: 1rem; height: 1rem;" />
-		{/if}
-	</Button>
-	<Button
-		variant="disabled"
-		type="button"
-		disabled={isLoading}
-		class="flex h-12 w-12 items-center justify-center"
-	>
-		{#if isLoading}
-			<Icons.spinner class="m-auto animate-spin" style="width: 1rem; height: 1rem;" />
-		{:else}
-			<Icons.facebook class="m-auto" style="width: 1rem; height: 1rem;" />
-		{/if}
-	</Button>
-
-	<Button
-		variant="disabled"
-		type="button"
-		disabled={isLoading}
-		class="flex h-12 w-12 items-center justify-center"
-	>
-		{#if isLoading}
-			<Icons.spinner class="m-auto animate-spin" style="width: 1rem; height: 1rem;" />
-		{:else}
-			<Icons.apple class="m-auto" style="width: 1rem; height: 1rem;" />
 		{/if}
 	</Button>
 </div>
