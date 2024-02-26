@@ -6,11 +6,15 @@
 	// @ts-ignore
 	import { cn } from '$lib/utils.js';
 
-	import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+	import {
+		signInWithPopup,
+		GoogleAuthProvider,
+		setPersistence,
+		browserLocalPersistence
+	} from 'firebase/auth';
 	import { auth } from '$lib/firebase/firebase.client.js';
 	import { session } from '$lib/firebase/session.js';
 	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
 	import { afterRegister } from '$lib/firebase/helpers/route.helper.js';
 	let className: string | undefined | null = undefined;
 	export { className as class };
@@ -19,17 +23,23 @@
 	async function handleGoogleSignIn() {
 		isLoading = true;
 		try {
-			const result = await signInWithPopup(auth, new GoogleAuthProvider());
-			const user = result.user;
-			console.log('User signed in with email:', user.email);
+			setPersistence(auth, browserLocalPersistence).then(async () => {
+				const user = await signInWithPopup(auth, new GoogleAuthProvider()).then(
+					(userCredential) => {
+						const retrievedUser = userCredential?.user;
+						session.update((currentSession) => ({
+							...currentSession,
+							retrievedUser,
+							loggedIn: true
+						}));
+						return retrievedUser;
+					}
+				);
 
-			session.update((currentSession) => ({
-				...currentSession,
-				user,
-				loggedIn: true
-			}));
+				console.log('User signed in with email:', user.email);
 
-			afterRegister($page.url, user);
+				afterRegister($page.url, user);
+			});
 		} catch (error) {
 			console.error('Error signing in with Google:', error);
 		} finally {

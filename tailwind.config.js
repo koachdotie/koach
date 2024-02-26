@@ -2,6 +2,7 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
 const config = {
+	purge: ['./src/**/*.svelte'],
 	darkMode: ["class"],
 	content: ["./src/**/*.{html,js,svelte,ts}"],
   safelist: ["dark"],
