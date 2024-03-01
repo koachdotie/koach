@@ -1,1 +1,1 @@
-<span class="m-4">i'm a cool dashboard</span>
+<span class="m-4">im a cool dashboard</span>

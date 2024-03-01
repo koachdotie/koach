@@ -8,9 +8,11 @@
 
 	import Sun from 'lucide-svelte/icons/sun';
 	import Moon from 'lucide-svelte/icons/moon';
+	import { getAuth, signOut } from 'firebase/auth';
 
 	import { toggleMode } from 'mode-watcher';
-</script>
+	import { goto } from '$app/navigation';
+	</script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
@@ -55,7 +57,20 @@
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 
-		<DropdownMenu.Item on:click={() => }>
+		<DropdownMenu.Item
+			on:click={() => {
+				signOut(getAuth())
+					.then(() => {
+						console.log("signed out")
+						//TODO Need to delete cookie/token here
+						goto("/login")
+					})
+					.catch((error) => {
+						console.log("not signed out")
+					});
+			}}
+			class="hover:cursor-pointer"
+		>
 			Log Out
 			<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
 		</DropdownMenu.Item>

@@ -2,7 +2,7 @@ import { browser } from '$app/environment';
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import type { FirebaseApp } from 'firebase/app';
-import { Firestore, initializeFirestore, CACHE_SIZE_UNLIMITED } from 'firebase/firestore';
+import { type Firestore, initializeFirestore, CACHE_SIZE_UNLIMITED } from 'firebase/firestore';
 import type { Auth } from 'firebase/auth';
 import { getAnalytics, type Analytics } from 'firebase/analytics';
 
