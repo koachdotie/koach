@@ -6,9 +6,6 @@ on:
       - main
   pull_request:
 
-env:
-  # If you have environment variables relevant to npm, define them here
-
 jobs:
   lint:
     runs-on: ubuntu-latest
