@@ -1,9 +1,18 @@
 import admin from 'firebase-admin';
-import { redirect } from '@sveltejs/kit';
+import { redirect, type Cookies } from '@sveltejs/kit';
+import type { DecodedIdToken } from 'firebase-admin/auth';
+import { createSessionCookieForUserId } from '$lib/server/firebase.js';
 
 const unprotectedRoutes = ['/signup', '/login'];
 const protectedRoutes = ['/', '/programs', '/workouts', '/exercises'];
+export const ONE_DAY_IN_SECONDS = 24 * 60 * 60;
+const SIX_DAYS_IN_SECONDS = ONE_DAY_IN_SECONDS * 6;
+export const ONE_WEEK_IN_SECONDS = 7 * ONE_DAY_IN_SECONDS;
 
+/**
+ * Firebase-admin SDK setup.
+ * This is used for tokens on the server side (auth persistence)
+ */
 const svcAccount = {
 	type: import.meta.env.VITE_TYPE,
 	project_id: import.meta.env.VITE_PROJECT_ID,
@@ -18,7 +27,6 @@ const svcAccount = {
 	unierse_domain: import.meta.env.VITE_UNIVERSE_DOMAIN
 };
 
-// Initialize Firebase Admin SDK
 if (admin.apps.length === 0) {
 	admin.initializeApp({
 		credential: admin.credential.cert(svcAccount as admin.ServiceAccount)
@@ -35,35 +43,41 @@ async function getUserFromToken(token: string) {
 	}
 }
 
-export async function handle({ event, resolve }) {
+export async function handle({ event, resolve }): Promise<Response> {
 	const url = event.url;
 	const token = event.cookies.get('idToken');
 
-	const isProtectedRoute = protectedRoutes.includes(url.pathname);
-	const redirectPath = new URLSearchParams(url.search).get('redirect') || url.pathname;
-
-	let redirectString = '';
-
-	if (redirectPath === '/') {
-		redirectString = `/signup`;
-	} else {
-		redirectString = `/signup?redirect=${redirectPath}`;
+	if (unprotectedRoutes.includes(url.pathname)) {
+		return resolve(event);
 	}
-	if (isProtectedRoute && !unprotectedRoutes.includes(url.pathname)) {
+
+	if (protectedRoutes.includes(url.pathname)) {
 		if (token) {
 			const user = await getUserFromToken(token);
 			if (!user) {
-				// User is not authenticated; redirect to signup with the intended redirect path
-				throw redirect(302, redirectString);
+				return redirect(302, `/signup?redirect=${url.pathname}`);
 			}
-			// User is authenticated; proceed with the request
+			event.locals.user = { id: user.uid, email: user.email };
 			return resolve(event);
 		} else {
-			// No token found; redirect to signup with the intended redirect path
-			throw redirect(302, redirectString);
+			return redirect(302, `/signup?redirect=${url.pathname}`);
 		}
 	}
 
-	// If not a protected route or specifically allowed (unprotected), proceed with the request
 	return resolve(event);
+}
+
+const shouldRefreshToken = (token: DecodedIdToken | null) =>
+	token && token.exp - Date.now() / 1000 < SIX_DAYS_IN_SECONDS;
+
+async function updateSessionCookie(token: DecodedIdToken, cookies: Cookies) {
+	const freshSessionCookie = await createSessionCookieForUserId(token.uid, ONE_WEEK_IN_SECONDS);
+
+	cookies.set('session', freshSessionCookie, {
+		path: '/',
+		httpOnly: true,
+		sameSite: 'strict',
+		secure: true,
+		maxAge: ONE_WEEK_IN_SECONDS
+	});
 }

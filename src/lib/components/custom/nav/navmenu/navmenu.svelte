@@ -54,11 +54,10 @@
 			<DropdownMenu.Item>New Team</DropdownMenu.Item>
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
-		<a href="/signup">
-			<DropdownMenu.Item>
-				Sign In
-				<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-		</a>
+
+		<DropdownMenu.Item on:click={() => }>
+			Log Out
+			<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
+		</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
