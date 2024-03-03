@@ -4,9 +4,9 @@ import { db } from '../firebase.client.js';
 import { collection, setDoc, doc } from 'firebase/firestore';
 
 export async function afterRegister(url: URL, user: User) {
-    const route = url.searchParams.get('redirect') || '/';
-    // await createUser(user)
-    await goto(route);
+	const route = url.searchParams.get('redirect') || '/';
+	// await createUser(user)
+	await goto(route);
 }
 
 export async function createUser(user: User) {

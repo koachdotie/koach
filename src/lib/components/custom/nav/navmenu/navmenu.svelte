@@ -12,7 +12,7 @@
 
 	import { toggleMode } from 'mode-watcher';
 	import { goto } from '$app/navigation';
-	</script>
+</script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
@@ -61,12 +61,12 @@
 			on:click={() => {
 				signOut(getAuth())
 					.then(() => {
-						console.log("signed out")
+						console.log('signed out');
 						//TODO Need to delete cookie/token here
-						goto("/login")
+						goto('/login');
 					})
 					.catch((error) => {
-						console.log("not signed out")
+						console.log('not signed out');
 					});
 			}}
 			class="hover:cursor-pointer"
