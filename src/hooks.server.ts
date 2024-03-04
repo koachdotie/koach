@@ -4,7 +4,7 @@ import { createSessionCookieForUserId, getIdTokenFromSessionCookie } from '$lib/
 import type { DecodedIdToken } from 'firebase-admin/auth';
 import { SIX_DAYS_IN_SECONDS, ONE_WEEK_IN_SECONDS } from '$lib/constants.js';
 
-const unprotectedRoutes = ['/signup', '/login'];
+const unprotectedRoutes = ['/auth'];
 const protectedRoutes = ['/', '/programs', '/workouts', '/exercises'];
 
 /**
@@ -63,7 +63,7 @@ export async function handle({ event, resolve }): Promise<Response> {
 		}
 	} else {
 		if (protectedRoutes.includes(event.url.pathname)) {
-			throw redirect(302, `/signup?redirect=${event.url.pathname}`);
+			throw redirect(302, `/auth?redirect=${event.url.pathname}`);
 		}
 	}
 

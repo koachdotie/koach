@@ -7,19 +7,21 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
 	import { MoonIcon, SunIcon } from 'lucide-svelte';
-	import { getAuth, signOut } from 'firebase/auth';
 	import { goto } from '$app/navigation';
 	import { toggleMode } from 'mode-watcher';
+	import { auth } from '$lib/firebase/firebase.client.js';
 
 	async function handleSignOut() {
 		try {
+			auth.signOut();
+
 			// goodbye cookkie
 			await fetch('/auth/session', {
 				method: 'DELETE'
 			});
 
-			// back to signup
-			await goto('/signup', { invalidateAll: true });
+			// back to auth
+			await goto('/auth', { invalidateAll: true });
 		} catch (error) {
 			console.error('Error signing out:', error);
 		}
@@ -69,19 +71,7 @@
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 
-		<DropdownMenu.Item
-			on:click={() => {
-				signOut(getAuth())
-					.then(() => {
-						console.log('signed out');
-						handleSignOut();
-					})
-					.catch((error) => {
-						console.log('not signed out');
-					});
-			}}
-			class="hover:cursor-pointer"
-		>
+		<DropdownMenu.Item on:click={handleSignOut} class="hover:cursor-pointer">
 			Log Out
 			<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
 		</DropdownMenu.Item>
