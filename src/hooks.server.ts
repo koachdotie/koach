@@ -46,63 +46,26 @@ export async function updateSessionCookie(token: DecodedIdToken, cookies: Cookie
 	});
 }
 
-async function getUserFromToken(token: string) {
-	try {
-		const decodedToken = await admin.auth().verifyIdToken(token);
-		return decodedToken;
-	} catch (error) {
-		console.error('Error verifying auth token', error);
-		return null;
-	}
-}
-
 export async function handle({ event, resolve }): Promise<Response> {
 	let session: string | undefined = event.cookies.get('session');
 
 	if (session) {
-		if (unprotectedRoutes.includes(event.url.pathname)) {
-			event.url.pathname = '/';
-		}
-
 		const token = await getIdTokenFromSessionCookie(session);
 
 		event.locals.user = token ? { id: token.uid, email: token.email } : null;
 
+		if (token && unprotectedRoutes.includes(event.url.pathname)) {
+			throw redirect(302, '/');
+		}
+
 		if (token && shouldRefreshToken(token)) {
 			await updateSessionCookie(token, event.cookies);
+		}
+	} else {
+		if (protectedRoutes.includes(event.url.pathname)) {
+			throw redirect(302, `/signup?redirect=${event.url.pathname}`);
 		}
 	}
 
 	return resolve(event);
 }
-
-// export async function handle({ event, resolve }): Promise<Response> {
-// 	let session: string | undefined = event.cookies.get('session');
-
-// 	console.log("1")
-// 	if (session) {
-// 		console.log('session coookie is present yay');
-// 		const token = await getIdTokenFromSessionCookie(session);
-// 		event.locals.user = token ? { id: token.uid, email: token.email } : null;
-
-// 		if (token && shouldRefreshToken(token)) {
-// 			await updateSessionCookie(token, event.cookies);
-// 		}
-
-// 		// see if its not protected (ie accessing signup while signed in)
-// 		if (unprotectedRoutes.includes(event.url.pathname)) {
-// 			event.url.pathname = '/';
-// 		}
-
-// 		return resolve(event);
-// 	} else {
-// 		console.log('session cookie not present');
-
-// 		if (unprotectedRoutes.includes(event.url.pathname)) {
-// 			console.log("unprotected route ", event.url.pathname)
-// 			return resolve(event)
-// 		}
-// 		console.log("3")
-// 		return redirect(302, `/signup?redirect=${event.url.pathname}`);
-// 	}
-// }
