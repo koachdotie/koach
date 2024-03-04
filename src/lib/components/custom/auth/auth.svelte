@@ -31,6 +31,12 @@
 				credentials: 'include'
 			});
 
+			session.update((currentSession) => ({
+				...currentSession,
+				user,
+				loggedIn: true
+			}));
+
 			console.log('User signed in as', user.email);
 			afterRegister($page.url, user, true);
 		} catch (error) {

@@ -11,6 +11,8 @@
 	import { toggleMode } from 'mode-watcher';
 	import { auth } from '$lib/firebase/firebase.client.js';
 
+	// get user from session in layout.svelte of (app)/ as a prop
+
 	async function handleSignOut() {
 		try {
 			auth.signOut();

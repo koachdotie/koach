@@ -1,8 +1,9 @@
 import admin from 'firebase-admin';
 import { redirect, type Cookies } from '@sveltejs/kit';
 import { createSessionCookieForUserId, getIdTokenFromSessionCookie } from '$lib/server/firebase.js';
-import type { DecodedIdToken } from 'firebase-admin/auth';
+import { getAuth, type DecodedIdToken } from 'firebase-admin/auth';
 import { SIX_DAYS_IN_SECONDS, ONE_WEEK_IN_SECONDS } from '$lib/constants.js';
+import { session } from '$lib/firebase/session.js';
 
 const unprotectedRoutes = ['/auth'];
 const protectedRoutes = ['/', '/programs', '/workouts', '/exercises'];
@@ -47,19 +48,27 @@ export async function updateSessionCookie(token: DecodedIdToken, cookies: Cookie
 }
 
 export async function handle({ event, resolve }): Promise<Response> {
-	let session: string | undefined = event.cookies.get('session');
+	let sesh: string | undefined = event.cookies.get('session');
 
-	if (session) {
-		const token = await getIdTokenFromSessionCookie(session);
+	if (sesh) {
+		const token = await getIdTokenFromSessionCookie(sesh);
 
-		event.locals.user = token ? { id: token.uid, email: token.email } : null;
+		if (token) {
+			let user = await getAuth().getUser(token.uid);
 
-		if (token && unprotectedRoutes.includes(event.url.pathname)) {
-			throw redirect(302, '/');
-		}
+			session.update((currentSession) => ({
+				...currentSession,
+				user,
+				loggedIn: true
+			}));
 
-		if (token && shouldRefreshToken(token)) {
-			await updateSessionCookie(token, event.cookies);
+			if (unprotectedRoutes.includes(event.url.pathname)) {
+				throw redirect(302, '/');
+			}
+
+			if (shouldRefreshToken(token)) {
+				await updateSessionCookie(token, event.cookies);
+			}
 		}
 	} else {
 		if (protectedRoutes.includes(event.url.pathname)) {
