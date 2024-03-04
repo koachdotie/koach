@@ -5,16 +5,11 @@
 	import { Button } from '$lib/components/ui/button';
 	// @ts-ignore
 	import { cn } from '$lib/utils.js';
-
-	import {
-		signInWithPopup,
-		GoogleAuthProvider,
-		setPersistence,
-		browserLocalPersistence
-	} from 'firebase/auth';
+	import { page } from '$app/stores';
+	import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 	import { auth } from '$lib/firebase/firebase.client.js';
 	import { session } from '$lib/firebase/session.js';
-	import { page } from '$app/stores';
+
 	import { afterRegister } from '$lib/firebase/helpers/route.helper.js';
 	let className: string | undefined | null = undefined;
 	export { className as class };
@@ -23,24 +18,21 @@
 	async function handleSignIn(provider: GoogleAuthProvider) {
 		isLoading = true;
 		try {
-			setPersistence(auth, browserLocalPersistence).then(async () => {
-				const user = await signInWithPopup(auth, provider).then((userCredential) => {
-					const retrievedUser = userCredential?.user;
-					session.update((currentSession) => ({
-						...currentSession,
-						retrievedUser,
-						loggedIn: true
-					}));
-					return retrievedUser;
-				});
+			const userCredential = await signInWithPopup(auth, provider);
+			const user = userCredential.user;
+			const token = await user.getIdToken();
 
-				const token = await user.getIdToken();
-				document.cookie = `idToken=${token};path=/;max-age=3600;secure`;
-
-				console.log('User signed in with email:', user.email);
-
-				afterRegister($page.url, user);
+			console.log('POSTing to /auth/session');
+			await fetch('/auth/session', {
+				method: 'POST',
+				headers: {
+					authorization: `Bearer ${token}`
+				},
+				credentials: 'include'
 			});
+
+			console.log('User signed in as', user.email);
+			afterRegister($page.url, user, true);
 		} catch (error) {
 			console.error('Error signing in with Google:', error);
 		} finally {

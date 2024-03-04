@@ -6,21 +6,33 @@
 	// @ts-ignore
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
-	import Sun from 'lucide-svelte/icons/sun';
-	import Moon from 'lucide-svelte/icons/moon';
+	import { MoonIcon, SunIcon } from 'lucide-svelte';
 	import { getAuth, signOut } from 'firebase/auth';
-
-	import { toggleMode } from 'mode-watcher';
 	import { goto } from '$app/navigation';
+	import { toggleMode } from 'mode-watcher';
+
+	async function handleSignOut() {
+		try {
+			// goodbye cookkie
+			await fetch('/auth/session', {
+				method: 'DELETE'
+			});
+
+			// back to signup
+			await goto('/signup', { invalidateAll: true });
+		} catch (error) {
+			console.error('Error signing out:', error);
+		}
+	}
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button on:click={toggleMode} variant="outline" size="icon">
-			<Sun
+			<SunIcon
 				class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
 			/>
-			<Moon
+			<MoonIcon
 				class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
 			/>
 			<span class="sr-only">Toggle theme</span>
@@ -62,8 +74,7 @@
 				signOut(getAuth())
 					.then(() => {
 						console.log('signed out');
-						//TODO Need to delete cookie/token here
-						goto('/login');
+						handleSignOut();
 					})
 					.catch((error) => {
 						console.log('not signed out');
