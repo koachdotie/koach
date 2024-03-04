@@ -6,21 +6,37 @@
 	// @ts-ignore
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
-	import Sun from 'lucide-svelte/icons/sun';
-	import Moon from 'lucide-svelte/icons/moon';
-	import { getAuth, signOut } from 'firebase/auth';
-
-	import { toggleMode } from 'mode-watcher';
+	import { MoonIcon, SunIcon } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
+	import { toggleMode } from 'mode-watcher';
+	import { auth } from '$lib/firebase/firebase.client.js';
+
+	// get user from session in layout.svelte of (app)/ as a prop
+
+	async function handleSignOut() {
+		try {
+			auth.signOut();
+
+			// goodbye cookkie
+			await fetch('/auth/session', {
+				method: 'DELETE'
+			});
+
+			// back to auth
+			await goto('/auth', { invalidateAll: true });
+		} catch (error) {
+			console.error('Error signing out:', error);
+		}
+	}
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button on:click={toggleMode} variant="outline" size="icon">
-			<Sun
+			<SunIcon
 				class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
 			/>
-			<Moon
+			<MoonIcon
 				class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
 			/>
 			<span class="sr-only">Toggle theme</span>
@@ -57,20 +73,7 @@
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 
-		<DropdownMenu.Item
-			on:click={() => {
-				signOut(getAuth())
-					.then(() => {
-						console.log('signed out');
-						//TODO Need to delete cookie/token here
-						goto('/login');
-					})
-					.catch((error) => {
-						console.log('not signed out');
-					});
-			}}
-			class="hover:cursor-pointer"
-		>
+		<DropdownMenu.Item on:click={handleSignOut} class="hover:cursor-pointer">
 			Log Out
 			<DropdownMenu.Shortcut>⇧⌘Q</DropdownMenu.Shortcut>
 		</DropdownMenu.Item>

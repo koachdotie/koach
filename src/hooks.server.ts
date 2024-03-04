@@ -1,13 +1,12 @@
 import admin from 'firebase-admin';
 import { redirect, type Cookies } from '@sveltejs/kit';
-import type { DecodedIdToken } from 'firebase-admin/auth';
-import { createSessionCookieForUserId } from '$lib/server/firebase.js';
+import { createSessionCookieForUserId, getIdTokenFromSessionCookie } from '$lib/server/firebase.js';
+import { getAuth, type DecodedIdToken } from 'firebase-admin/auth';
+import { SIX_DAYS_IN_SECONDS, ONE_WEEK_IN_SECONDS } from '$lib/constants.js';
+import { session } from '$lib/firebase/session.js';
 
-const unprotectedRoutes = ['/signup', '/login'];
+const unprotectedRoutes = ['/auth'];
 const protectedRoutes = ['/', '/programs', '/workouts', '/exercises'];
-export const ONE_DAY_IN_SECONDS = 24 * 60 * 60;
-const SIX_DAYS_IN_SECONDS = ONE_DAY_IN_SECONDS * 6;
-export const ONE_WEEK_IN_SECONDS = 7 * ONE_DAY_IN_SECONDS;
 
 /**
  * Firebase-admin SDK setup.
@@ -33,44 +32,10 @@ if (admin.apps.length === 0) {
 	});
 }
 
-async function getUserFromToken(token: string) {
-	try {
-		const decodedToken = await admin.auth().verifyIdToken(token);
-		return decodedToken;
-	} catch (error) {
-		console.error('Error verifying auth token', error);
-		return null;
-	}
-}
-
-export async function handle({ event, resolve }): Promise<Response> {
-	const url = event.url;
-	const token = event.cookies.get('idToken');
-
-	if (unprotectedRoutes.includes(url.pathname)) {
-		return resolve(event);
-	}
-
-	if (protectedRoutes.includes(url.pathname)) {
-		if (token) {
-			const user = await getUserFromToken(token);
-			if (!user) {
-				return redirect(302, `/signup?redirect=${url.pathname}`);
-			}
-			event.locals.user = { id: user.uid, email: user.email };
-			return resolve(event);
-		} else {
-			return redirect(302, `/signup?redirect=${url.pathname}`);
-		}
-	}
-
-	return resolve(event);
-}
-
-const shouldRefreshToken = (token: DecodedIdToken | null) =>
+export const shouldRefreshToken = (token: DecodedIdToken | null) =>
 	token && token.exp - Date.now() / 1000 < SIX_DAYS_IN_SECONDS;
 
-async function updateSessionCookie(token: DecodedIdToken, cookies: Cookies) {
+export async function updateSessionCookie(token: DecodedIdToken, cookies: Cookies) {
 	const freshSessionCookie = await createSessionCookieForUserId(token.uid, ONE_WEEK_IN_SECONDS);
 
 	cookies.set('session', freshSessionCookie, {
@@ -80,4 +45,36 @@ async function updateSessionCookie(token: DecodedIdToken, cookies: Cookies) {
 		secure: true,
 		maxAge: ONE_WEEK_IN_SECONDS
 	});
+}
+
+export async function handle({ event, resolve }): Promise<Response> {
+	let sesh: string | undefined = event.cookies.get('session');
+
+	if (sesh) {
+		const token = await getIdTokenFromSessionCookie(sesh);
+
+		if (token) {
+			let user = await getAuth().getUser(token.uid);
+
+			session.update((currentSession) => ({
+				...currentSession,
+				user,
+				loggedIn: true
+			}));
+
+			if (unprotectedRoutes.includes(event.url.pathname)) {
+				throw redirect(302, '/');
+			}
+
+			if (shouldRefreshToken(token)) {
+				await updateSessionCookie(token, event.cookies);
+			}
+		}
+	} else {
+		if (protectedRoutes.includes(event.url.pathname)) {
+			throw redirect(302, `/auth?redirect=${event.url.pathname}`);
+		}
+	}
+
+	return resolve(event);
 }
