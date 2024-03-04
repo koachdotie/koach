@@ -29,7 +29,7 @@ export const initializeFirebase = () => {
 		app = initializeApp(firebaseConfig);
 		analytics = getAnalytics(app);
 		auth = getAuth(app);
-		setPersistence(auth, browserLocalPersistence)
+		setPersistence(auth, browserLocalPersistence);
 		db = initializeFirestore(app, {
 			cacheSizeBytes: CACHE_SIZE_UNLIMITED
 		});
