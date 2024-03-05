@@ -1,24 +1,24 @@
 <script lang="ts">
-	import { Input } from "@/registry/new-york/ui/input";
-	import { DataTableFacetedFilter, DataTableViewOptions } from ".";
-	import type { Task } from "../(data)/schemas";
-	import type { TableViewModel } from "svelte-headless-table";
-	import Button from "@/registry/new-york/ui/button/button.svelte";
-	import Cross2 from "svelte-radix/Cross2.svelte";
-	import { statuses, priorities } from "../(data)/data";
-	import type { Writable } from "svelte/store";
+	import { Input } from '$lib/components/ui/input';
+	import { DataTableFacetedFilter, DataTableViewOptions } from '.';
+	import type { Task } from '../(data)/schemas';
+	import type { TableViewModel } from 'svelte-headless-table';
+	import { Button } from '$lib/components/ui/button';
+	import { Plus } from 'lucide-svelte';
+	import { statuses, modalities } from '../(data)/data';
+	import type { Writable } from 'svelte/store';
 
 	export let tableModel: TableViewModel<Task>;
 
 	const { pluginStates } = tableModel;
 	const {
-		filterValue,
+		filterValue
 	}: {
 		filterValue: Writable<string>;
 	} = pluginStates.filter;
 
 	const {
-		filterValues,
+		filterValues
 	}: {
 		filterValues: Writable<{
 			status: string[];
@@ -46,12 +46,12 @@
 		<DataTableFacetedFilter
 			bind:filterValues={$filterValues.priority}
 			title="Priority"
-			options={priorities}
+			options={modalities}
 		/>
 		{#if showReset}
 			<Button
 				on:click={() => {
-					$filterValue = "";
+					$filterValue = '';
 					$filterValues.status = [];
 					$filterValues.priority = [];
 				}}
@@ -59,7 +59,7 @@
 				class="h-8 px-2 lg:px-3"
 			>
 				Reset
-				<Cross2 class="ml-2 h-4 w-4" />
+				<Plus class="ml-2 h-4 w-4" />
 			</Button>
 		{/if}
 	</div>
