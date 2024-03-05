@@ -2,10 +2,10 @@
 	import { SlidersHorizontal } from "lucide-svelte";
 	import { Button } from "$lib/components/ui/button";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
-	import type { Task } from "../(data)/schemas";
+	import type { Program } from "$lib/data/program/program";
 	import type { TableViewModel } from "svelte-headless-table";
 
-	export let tableModel: TableViewModel<Task>;
+	export let tableModel: TableViewModel<Program>;
 	const { pluginStates, flatColumns } = tableModel;
 	const { hiddenColumnIds } = pluginStates.hide;
 
@@ -17,7 +17,7 @@
 		.filter(([, hide]) => !hide)
 		.map(([id]) => id);
 
-	const hidableCols = ["title", "status", "priority"];
+	const hidableCols = ["description", "modality", "experiencelevel"];
 </script>
 
 <DropdownMenu.Root>

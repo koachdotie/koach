@@ -5,10 +5,10 @@
 	import { ArrowRight } from 'lucide-svelte';
 	import { ArrowLeft } from 'lucide-svelte';
 	import * as Select from '$lib/components/ui/select';
-	import type { Task } from '../(data)/schemas';
+	import type { Program } from '$lib/data/program/program';
 	import type { TableViewModel } from 'svelte-headless-table';
 
-	export let tableModel: TableViewModel<Task>;
+	export let tableModel: TableViewModel<Program>;
 
 	const { pageRows, pluginStates, rows } = tableModel;
 

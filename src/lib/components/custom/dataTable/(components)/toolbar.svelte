@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
 	import { DataTableFacetedFilter, DataTableViewOptions } from '.';
-	import type { Task } from '../(data)/schemas';
+	import type { Program } from '$lib/data/program/program';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import { Button } from '$lib/components/ui/button';
 	import { Plus } from 'lucide-svelte';
-	import { statuses, modalities } from '../(data)/data';
+	import { experienceLevels, modalities } from '../(data)/data';
 	import type { Writable } from 'svelte/store';
 
-	export let tableModel: TableViewModel<Task>;
+	export let tableModel: TableViewModel<Program>;
 
 	const { pluginStates } = tableModel;
 	const {
@@ -21,8 +21,8 @@
 		filterValues
 	}: {
 		filterValues: Writable<{
-			status: string[];
-			priority: string[];
+			experienceLevel: string[];
+			modalities: string[];
 		}>;
 	} = pluginStates.colFilter;
 
@@ -39,21 +39,21 @@
 		/>
 
 		<DataTableFacetedFilter
-			bind:filterValues={$filterValues.status}
-			title="Status"
-			options={statuses}
+			bind:filterValues={$filterValues.experienceLevel}
+			title="Experience Level"
+			options={experienceLevels}
 		/>
 		<DataTableFacetedFilter
-			bind:filterValues={$filterValues.priority}
-			title="Priority"
+			bind:filterValues={$filterValues.modalities}
+			title="Modality"
 			options={modalities}
 		/>
 		{#if showReset}
 			<Button
 				on:click={() => {
 					$filterValue = '';
-					$filterValues.status = [];
-					$filterValues.priority = [];
+					$filterValues.modalities = [];
+					$filterValues.experienceLevel = [];
 				}}
 				variant="ghost"
 				class="h-8 px-2 lg:px-3"

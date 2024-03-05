@@ -15,35 +15,40 @@ export const labels = [
 	}
 ];
 
-export const statuses = [
+export const modalities = [
 	{
-		value: 'backlog',
-		label: 'Backlog',
+		value: 'hypertrophy',
+		label: 'Hyperthrophy',
 		icon: ArrowDown
 	},
 	{
-		value: 'todo',
-		label: 'Todo',
+		value: 'strength',
+		label: 'Strength',
 		icon: ArrowDown
 	},
 	{
-		value: 'in progress',
-		label: 'In Progress',
+		value: 'powerbuilding',
+		label: 'Powerbuilding',
 		icon: ArrowDown
 	},
 	{
-		value: 'done',
-		label: 'Done',
+		value: 'sportspecific',
+		label: 'Sport-Specific',
 		icon: ArrowDown
 	},
 	{
-		value: 'canceled',
-		label: 'Canceled',
+		value: 'power',
+		label: 'Power',
+		icon: ArrowDown
+	},
+	{
+		value: 'cardiovascular',
+		label: 'Cardiovascular',
 		icon: ArrowDown
 	}
 ];
 
-export const modalities = [
+export const experienceLevels = [
 	{
 		label: 'Beginner',
 		value: 'beginner',

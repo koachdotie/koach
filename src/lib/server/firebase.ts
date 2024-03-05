@@ -3,17 +3,10 @@ import { getApp, getApps, initializeApp } from 'firebase-admin/app';
 import type { DecodedIdToken } from 'firebase-admin/auth';
 import { getAuth } from 'firebase-admin/auth';
 
-// import { FIREBASE_ADMIN_CLIENT_EMAIL, FIREBASE_ADMIN_PRIVATE_KEY } from '$env/static/private';
-// import { PUBLIC_FIREBASE_API_KEY, PUBLIC_FIREBASE_PROJECT_ID } from '$env/static/public';
-
-// const projectId = PUBLIC_FIREBASE_PROJECT_ID;
-// const clientEmail = FIREBASE_ADMIN_CLIENT_EMAIL;
-// const privateKey = FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n');
-// const apiKey = PUBLIC_FIREBASE_API_KEY;
-
-// if (!projectId || !clientEmail || !privateKey || !apiKey) {
-// 	//throw new Error('Firebase Admin environment variables not set');
-// }
+const projectId = import.meta.env.VITE_PROJECT_ID;
+const clientEmail = import.meta.env.VITE_CLIENT_EMAIL;
+const privateKey = import.meta.env.VITE_PRIVATE_KEY;
+const apiKey = import.meta.env.VITE_API_KEY;
 
 const adminConfig: AppOptions = {
 	projectId: 'sveltekit-adapter'

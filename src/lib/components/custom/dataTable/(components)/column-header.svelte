@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Home } from 'lucide-svelte';
+	import { ArrowUpDown } from 'lucide-svelte';
 	import { ArrowDown } from 'lucide-svelte';
 	import { ArrowUp } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
@@ -45,7 +45,7 @@
 					{:else if props.sort.order === 'asc'}
 						<ArrowUp class="ml-2 h-4 w-4" />
 					{:else}
-						<Home class="ml-2 h-4 w-4" />
+						<ArrowUpDown class="ml-2 h-4 w-4" />
 					{/if}
 				</Button>
 			</DropdownMenu.Trigger>

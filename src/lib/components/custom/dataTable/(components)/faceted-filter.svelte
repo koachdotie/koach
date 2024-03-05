@@ -7,11 +7,11 @@
 	import { cn } from '$lib/utils';
 	import { Separator } from '$lib/components/ui/separator';
 	import { Badge } from '$lib/components/ui/badge';
-	import type { statuses } from '../(data)/data';
+	import type { experienceLevels } from '../(data)/data';
 
 	export let filterValues: string[] = [];
 	export let title: string;
-	export let options = [] as typeof statuses;
+	export let options = [] as typeof experienceLevels;
 
 	let open = false;
 

@@ -2,11 +2,15 @@
 	import DataTable from "./(components)/data-table.svelte";
 	import data from "./(data)/tasks.json";
 </script>
-
-<div class="md:hidden">
+<!-- 
+	MAYBE COME BACK TO THIS LATER
+	ACTUALLY PRETTY HANDY
+	THE md:hidden HIDES THAT ON LARGETR SCREENS BUT FOR MOBILE IT SHOWS 
+-->
+<!-- <div class="md:hidden">
 	<img src="/examples/tasks-light.png" alt="Tasks" class="block dark:hidden" />
 	<img src="/examples/tasks-dark.png" alt="Tasks" class="hidden dark:block" />
-</div>
+</div> -->
 <div class="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
 	<div class="flex items-center justify-between space-y-2">
 		<div>

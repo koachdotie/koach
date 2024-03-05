@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { modalities } from '../(data)/data';
+	import { modalities } from '../../(data)/data';
 
 	export let value: string;
 	const modality = modalities.find((modality) => modality.value === value);
