@@ -13,15 +13,14 @@
 	import {
 		DataTableCheckbox,
 		DataTableDescriptionCell,
-		DataTableStatusCell,
+		DataTableExpLevelCell,
 		DataTableRowActions,
-		DataTablePriorityCell,
+		DataTableModalityCell,
 		DataTableColumnHeader,
 		DataTableToolbar,
 		DataTablePagination
 	} from '.';
-
-	import type { Program } from '$lib/data/program/program';
+	import type { Program } from '../(data)/schemas';
 
 	export let data: Program[];
 
@@ -84,8 +83,7 @@
 			cell: ({ value, row }) => {
 				if (row.isData()) {
 					return createRender(DataTableDescriptionCell, {
-						value,
-						labelValue: row.original.description
+						value
 					});
 				}
 				return value;
@@ -96,7 +94,7 @@
 			header: 'Modality',
 			id: 'modality',
 			cell: ({ value }) => {
-				return createRender(DataTableStatusCell, {
+				return createRender(DataTableModalityCell, {
 					value
 				});
 			},
@@ -121,7 +119,7 @@
 			id: 'experiencelevel',
 			header: 'Experience Level',
 			cell: ({ value }) => {
-				return createRender(DataTablePriorityCell, {
+				return createRender(DataTableExpLevelCell, {
 					value
 				});
 			},

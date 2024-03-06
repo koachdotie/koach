@@ -1,8 +1,8 @@
 export { default as DataTableCheckbox } from "./checkbox.svelte";
-export { default as DataTableStatusCell } from "./cells/experienceLevel-cell.svelte";
+export { default as DataTableExpLevelCell } from "./cells/experienceLevel-cell.svelte";
 export { default as DataTableRowActions } from "./row-actions.svelte";
 export { default as DataTableDescriptionCell } from "./cells/description-cell.svelte";
-export { default as DataTablePriorityCell } from "./cells/modality-cell.svelte";
+export { default as DataTableModalityCell } from "./cells/modality-cell.svelte";
 export { default as DataTableColumnHeader } from "./column-header.svelte";
 export { default as DataTableToolbar } from "./toolbar.svelte";
 export { default as DataTablePagination } from "./pagination.svelte";

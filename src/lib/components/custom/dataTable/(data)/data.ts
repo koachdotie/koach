@@ -1,20 +1,5 @@
 import { ArrowDown } from 'lucide-svelte';
 
-export const labels = [
-	{
-		value: 'bug',
-		label: 'Bug'
-	},
-	{
-		value: 'feature',
-		label: 'Feature'
-	},
-	{
-		value: 'documentation',
-		label: 'Documentation'
-	}
-];
-
 export const modalities = [
 	{
 		value: 'hypertrophy',
@@ -48,7 +33,7 @@ export const modalities = [
 	}
 ];
 
-export const experienceLevels = [
+export const experiencelevels = [
 	{
 		label: 'Beginner',
 		value: 'beginner',
@@ -56,12 +41,12 @@ export const experienceLevels = [
 	},
 	{
 		label: 'Late Beginner',
-		value: 'latebeginner',
+		value: 'late beginner',
 		icon: ArrowDown
 	},
 	{
 		label: 'Early Intermediate',
-		value: 'earlyintermediate',
+		value: 'early intermediate',
 		icon: ArrowDown
 	},
 	{
@@ -71,7 +56,7 @@ export const experienceLevels = [
 	},
 	{
 		label: 'Late Intermediate',
-		value: 'lateintermediate',
+		value: 'late intermediate',
 		icon: ArrowDown
 	},
 	{

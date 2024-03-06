@@ -2,11 +2,10 @@
 	import { MoreHorizontal } from "lucide-svelte";
 	import { Button } from "$lib/components/ui/button";
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu'
-	import { modalities } from "../(data)/data";
-	import type { Program } from "$lib/data/program/program";
+	import { programSchema, type Program } from "../(data)/schemas";
 
 	export let row: Program;
-	const program = row;
+	const program = programSchema.parse(row);
 </script>
 
 <DropdownMenu.Root>
@@ -24,8 +23,11 @@
 		<DropdownMenu.Item>Edit</DropdownMenu.Item>
 		<DropdownMenu.Item>Make a copy</DropdownMenu.Item>
 		<DropdownMenu.Item>Favorite</DropdownMenu.Item>
-		<DropdownMenu.Separator />
-		<DropdownMenu.Sub>
+		<!-- 
+			Later can add tags in here
+		 -->
+		<!-- <DropdownMenu.Separator /> -->
+		<!-- <DropdownMenu.Sub>
 			<DropdownMenu.SubTrigger>Modalities</DropdownMenu.SubTrigger>
 			<DropdownMenu.SubContent>
 				<DropdownMenu.RadioGroup value={program.modality}>
@@ -36,7 +38,7 @@
 					{/each}
 				</DropdownMenu.RadioGroup>
 			</DropdownMenu.SubContent>
-		</DropdownMenu.Sub>
+		</DropdownMenu.Sub> -->
 		<DropdownMenu.Separator />
 		<DropdownMenu.Item>
 			Delete

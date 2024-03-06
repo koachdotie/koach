@@ -5,8 +5,8 @@
 	import { ArrowRight } from 'lucide-svelte';
 	import { ArrowLeft } from 'lucide-svelte';
 	import * as Select from '$lib/components/ui/select';
-	import type { Program } from '$lib/data/program/program';
 	import type { TableViewModel } from 'svelte-headless-table';
+	import type { Program } from '../(data)/schemas';
 
 	export let tableModel: TableViewModel<Program>;
 

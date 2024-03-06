@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
 	import { DataTableFacetedFilter, DataTableViewOptions } from '.';
-	import type { Program } from '$lib/data/program/program';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import { Button } from '$lib/components/ui/button';
 	import { Plus } from 'lucide-svelte';
-	import { experienceLevels, modalities } from '../(data)/data';
+	import { experiencelevels, modalities } from '../(data)/data';
 	import type { Writable } from 'svelte/store';
+	import type { Program } from '../(data)/schemas';
 
 	export let tableModel: TableViewModel<Program>;
 
@@ -21,12 +21,14 @@
 		filterValues
 	}: {
 		filterValues: Writable<{
-			experienceLevel: string[];
-			modalities: string[];
+			experiencelevel: string[];
+			modality: string[];
 		}>;
 	} = pluginStates.colFilter;
 
+
 	$: showReset = Object.values({ ...$filterValues, $filterValue }).some((v) => v.length > 0);
+	console.log($filterValues.modality)
 </script>
 
 <div class="flex items-center justify-between">
@@ -39,12 +41,12 @@
 		/>
 
 		<DataTableFacetedFilter
-			bind:filterValues={$filterValues.experienceLevel}
+			bind:filterValues={$filterValues.experiencelevel}
 			title="Experience Level"
-			options={experienceLevels}
+			options={experiencelevels}
 		/>
 		<DataTableFacetedFilter
-			bind:filterValues={$filterValues.modalities}
+			bind:filterValues={$filterValues.modality}
 			title="Modality"
 			options={modalities}
 		/>
@@ -52,8 +54,8 @@
 			<Button
 				on:click={() => {
 					$filterValue = '';
-					$filterValues.modalities = [];
-					$filterValues.experienceLevel = [];
+					$filterValues.modality = [];
+					$filterValues.experiencelevel = [];
 				}}
 				variant="ghost"
 				class="h-8 px-2 lg:px-3"

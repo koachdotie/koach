@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { experienceLevels } from '../../(data)/data';
+	import { experiencelevels } from '../../(data)/data';
 	export let value: string;
-	const expLevel = experienceLevels.find((expLevel) => expLevel.value === value);
+	const expLevel = experiencelevels.find((expLevel) => expLevel.value === value);
 	const Icon = expLevel?.icon;
 </script>
 
@@ -10,6 +10,6 @@
 		{#if Icon}
 			<svelte:component this={Icon} class="mr-2 h-4 w-4 text-muted-foreground" />
 		{/if}
-		<span>{expLevel?.label}</span>
+		<span>{expLevel.label}</span>
 	</div>
 {/if}

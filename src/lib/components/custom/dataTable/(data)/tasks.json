@@ -1,47 +1,32 @@
 [
 	{
-		"uid": "PROGRAM-001",
-		"clientUid": "CLIENT-123",
 		"name": "Beginner Strength Training",
 		"description": "A program designed for beginners focusing on building foundational strength.",
-		"modality": "Strength",
-		"experienceLevel": "Beginner",
-		"plannedWorkouts": []
+		"modality": "strength",
+		"experienceLevel": "beginner"
 	},
 	{
-		"uid": "PROGRAM-002",
-		"clientUid": "CLIENT-456",
 		"name": "Intermediate Cardio Blast",
 		"description": "An intermediate-level program aimed at improving cardiovascular health.",
-		"modality": "Cardiovascular",
-		"experienceLevel": "Intermediate",
-		"plannedWorkouts": []
+		"modality": "cardiovascular",
+		"experienceLevel": "intermediate"
 	},
 	{
-		"uid": "PROGRAM-003",
-		"clientUid": "CLIENT-1234",
 		"name": "Advanced Powerbuilding",
 		"description": "A challenging program that combines the principles of powerlifting and bodybuilding.",
-		"modality": "Powerbuilding",
-		"experienceLevel": "Advanced",
-		"plannedWorkouts": []
+		"modality": "powerbuilding",
+		"experienceLevel": "advanced"
 	},
 	{
-		"uid": "PROGRAM-004",
-		"clientUid": "CLIENT-789",
 		"name": "Sport-Specific Conditioning",
 		"description": "Customized training program for athletes looking to improve performance in their specific sport.",
-		"modality": "SportSpecific",
-		"experienceLevel": "Intermediate",
-		"plannedWorkouts": []
+		"modality": "sportspecific",
+		"experienceLevel": "intermediate"
 	},
 	{
-		"uid": "PROGRAM-005",
-		"clientUid": "CLIENT-1011",
 		"name": "Hypertrophy and Strength",
 		"description": "Focuses on muscle growth and strength increase, suitable for late beginners to intermediate trainees.",
-		"modality": "Hypertrophy",
-		"experienceLevel": "Late Beginner",
-		"plannedWorkouts": []
+		"modality": "hypertrophy",
+		"experienceLevel": "late beginner"
 	}
 ]
