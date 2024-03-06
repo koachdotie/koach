@@ -1,25 +1,25 @@
-import { ArrowDown } from 'lucide-svelte';
+import { Activity, ArrowDown, Blocks, Dumbbell, PersonStanding, Tally2, Tally3, Tally4, Trophy } from 'lucide-svelte';
 
 export const modalities = [
 	{
 		value: 'hypertrophy',
 		label: 'Hyperthrophy',
-		icon: ArrowDown
+		icon: Dumbbell
 	},
 	{
 		value: 'strength',
 		label: 'Strength',
-		icon: ArrowDown
+		icon: PersonStanding
 	},
 	{
 		value: 'powerbuilding',
 		label: 'Powerbuilding',
-		icon: ArrowDown
+		icon: Blocks
 	},
 	{
 		value: 'sportspecific',
 		label: 'Sport-Specific',
-		icon: ArrowDown
+		icon: Trophy
 	},
 	{
 		value: 'power',
@@ -29,7 +29,7 @@ export const modalities = [
 	{
 		value: 'cardiovascular',
 		label: 'Cardiovascular',
-		icon: ArrowDown
+		icon: Activity
 	}
 ];
 
@@ -37,31 +37,13 @@ export const experiencelevels = [
 	{
 		label: 'Beginner',
 		value: 'beginner',
-		icon: ArrowDown
-	},
-	{
-		label: 'Late Beginner',
-		value: 'late beginner',
-		icon: ArrowDown
-	},
-	{
-		label: 'Early Intermediate',
-		value: 'early intermediate',
-		icon: ArrowDown
 	},
 	{
 		label: 'Intermediate',
 		value: 'intermediate',
-		icon: ArrowDown
-	},
-	{
-		label: 'Late Intermediate',
-		value: 'late intermediate',
-		icon: ArrowDown
 	},
 	{
 		label: 'Advanced',
 		value: 'advanced',
-		icon: ArrowDown
 	}
 ];
