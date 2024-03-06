@@ -51,34 +51,36 @@
 			{#each library as item}
 				{@const isActive = $page.url.pathname === item.href}
 
-				<Button
-					href={item.href}
-					variant="ghost"
-					class={cn(
-						'relative flex w-full items-center justify-start hover:bg-transparent',
-						!isActive && 'hover:underline',
-						isActive ? 'text-white' : 'text-gray-400' // Active items are white, others are grey
-					)}
-					data-sveltekit-noscroll
-				>
-					{#if isActive}
-						<div
-							class="absolute inset-0 rounded-md bg-muted"
-							in:send={{ key: 'active-sidebar-tab' }}
-							out:receive={{ key: 'active-sidebar-tab' }}
-						/>
-					{/if}
+				<div class="my-4">
+					<Button
+						href={item.href}
+						variant="ghost"
+						class={cn(
+							'relative flex w-full items-center justify-start hover:bg-transparent',
+							!isActive && 'hover:underline',
+							isActive ? 'text-white' : 'text-gray-400' // Active items are white, others are grey
+						)}
+						data-sveltekit-noscroll
+					>
+						{#if isActive}
+							<div
+								class="absolute inset-0 rounded-md bg-muted"
+								in:send={{ key: 'active-sidebar-tab' }}
+								out:receive={{ key: 'active-sidebar-tab' }}
+							/>
+						{/if}
 
-					<div class="relative flex">
-						<svelte:component
-							this={item.icon}
-							class={isActive ? 'mr-4 text-white' : 'mr-4 text-gray-400'}
-						/>
-						<span class={isActive ? 'text-white' : 'text-gray-400'}>
-							{item.title}
-						</span>
-					</div>
-				</Button>
+						<div class="relative flex">
+							<svelte:component
+								this={item.icon}
+								class={isActive ? 'mr-4 text-white' : 'mr-4 text-gray-400'}
+							/>
+							<span class={isActive ? 'text-white' : 'text-gray-400'}>
+								{item.title}
+							</span>
+						</div>
+					</Button>
+				</div>
 			{/each}
 		</div>
 	</div>
@@ -93,34 +95,36 @@
 			{#each social as item}
 				{@const isActive = $page.url.pathname === item.href}
 
-				<Button
-					href={item.href}
-					variant="ghost"
-					class={cn(
-						'relative flex w-full items-center justify-start hover:bg-transparent',
-						!isActive && 'hover:underline',
-						isActive ? 'text-white' : 'text-gray-400' // Active items are white, others are grey
-					)}
-					data-sveltekit-noscroll
-				>
-					{#if isActive}
-						<div
-							class="absolute inset-0 rounded-md bg-muted"
-							in:send={{ key: 'active-sidebar-tab' }}
-							out:receive={{ key: 'active-sidebar-tab' }}
-						/>
-					{/if}
+				<div class="my-4">
+					<Button
+						href={item.href}
+						variant="ghost"
+						class={cn(
+							'relative flex w-full items-center justify-start hover:bg-transparent',
+							!isActive && 'hover:underline',
+							isActive ? 'text-white' : 'text-gray-400' // Active items are white, others are grey
+						)}
+						data-sveltekit-noscroll
+					>
+						{#if isActive}
+							<div
+								class="absolute inset-0 rounded-md bg-muted"
+								in:send={{ key: 'active-sidebar-tab' }}
+								out:receive={{ key: 'active-sidebar-tab' }}
+							/>
+						{/if}
 
-					<div class="relative flex">
-						<svelte:component
-							this={item.icon}
-							class={isActive ? 'mr-4 text-white' : 'mr-4 text-gray-400'}
-						/>
-						<span class={isActive ? 'text-white' : 'text-gray-400'}>
-							{item.title}
-						</span>
-					</div>
-				</Button>
+						<div class="relative flex">
+							<svelte:component
+								this={item.icon}
+								class={isActive ? 'mr-4 text-white' : 'mr-4 text-gray-400'}
+							/>
+							<span class={isActive ? 'text-white' : 'text-gray-400'}>
+								{item.title}
+							</span>
+						</div>
+					</Button>
+				</div>
 			{/each}
 		</div>
 	</div>

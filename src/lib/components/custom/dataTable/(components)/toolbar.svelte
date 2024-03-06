@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
-	import { DataTableFacetedFilter, DataTableViewOptions } from '.';
+	import { CreateProgramButton, DataTableFacetedFilter, DataTableViewOptions } from '.';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import { Button } from '$lib/components/ui/button';
 	import { Plus } from 'lucide-svelte';
@@ -33,7 +33,7 @@
 <div class="flex items-center justify-between">
 	<div class="flex flex-1 items-center space-x-2">
 		<Input
-			placeholder="Filter tasks..."
+			placeholder="Filter programs..."
 			class="h-8 w-[150px] lg:w-[250px]"
 			type="search"
 			bind:value={$filterValue}
@@ -65,5 +65,8 @@
 		{/if}
 	</div>
 
+	<CreateProgramButton />
+
 	<DataTableViewOptions {tableModel} />
+
 </div>
