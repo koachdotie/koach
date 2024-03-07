@@ -1,7 +1,6 @@
 <script lang="ts">
 	// @ts-ignore
 	import { DataTable } from '$lib/components/custom/dataTable';
-	import { ExperienceLevel, Modality, Program } from '$lib/data/program/program.js';
 </script>
 
 <!-- <div class="m-16 flex items-center">

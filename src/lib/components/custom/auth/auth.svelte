@@ -33,7 +33,7 @@
 
 			session.update((currentSession) => ({
 				...currentSession,
-				user,
+				user: user,
 				loggedIn: true
 			}));
 

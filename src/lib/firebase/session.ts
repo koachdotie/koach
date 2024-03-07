@@ -1,9 +1,7 @@
-import type { UserRecord } from 'firebase-admin/auth';
-import type { User } from 'firebase/auth';
 import { writable, type Writable } from 'svelte/store';
 
 export type SessionState = {
-	user: User | UserRecord;
+	user: any;
 	loading?: boolean;
 	loggedIn?: boolean;
 };
