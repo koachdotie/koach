@@ -4,7 +4,6 @@ import { ONE_WEEK_IN_SECONDS } from '$lib/constants.js';
 import * as cookie from 'cookie';
 
 export const POST: RequestHandler = async ({ request, cookies }) => {
-	console.log('Session POST');
 	const authHeader = request.headers.get('Authorization') || '';
 	const [scheme, token] = authHeader.split(' ');
 

@@ -1,4 +1,14 @@
-import { Activity, ArrowDown, Blocks, Dumbbell, PersonStanding, Tally2, Tally3, Tally4, Trophy } from 'lucide-svelte';
+import {
+	Activity,
+	ArrowDown,
+	Blocks,
+	Dumbbell,
+	PersonStanding,
+	Tally2,
+	Tally3,
+	Tally4,
+	Trophy
+} from 'lucide-svelte';
 
 export const modalities = [
 	{
@@ -36,14 +46,14 @@ export const modalities = [
 export const experiencelevels = [
 	{
 		label: 'Beginner',
-		value: 'beginner',
+		value: 'beginner'
 	},
 	{
 		label: 'Intermediate',
-		value: 'intermediate',
+		value: 'intermediate'
 	},
 	{
 		label: 'Advanced',
-		value: 'advanced',
+		value: 'advanced'
 	}
 ];

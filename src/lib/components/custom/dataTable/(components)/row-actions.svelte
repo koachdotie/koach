@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { MoreHorizontal } from "lucide-svelte";
-	import { Button } from "$lib/components/ui/button";
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu'
-	import { programSchema, type Program } from "../(data)/schemas";
+	import { MoreHorizontal } from 'lucide-svelte';
+	import { Button } from '$lib/components/ui/button';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { programSchema, type Program } from '../(data)/schemas';
 
 	export let row: Program;
 	const program = programSchema.parse(row);

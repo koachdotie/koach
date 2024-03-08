@@ -5,7 +5,7 @@ export class Coach {
 	firstName: string;
 	lastName: string;
 	email: string;
-    
+
 	constructor(uid: string, firstName: string, lastName: string, email: string) {
 		this.uid = uid;
 		this.firstName = firstName;
@@ -25,11 +25,6 @@ export const coachConverter = {
 		const data = snapshot.data();
 		if (!data) throw new Error('Coach data not found');
 
-		return new Coach(
-			data.uid,
-			data.firstName,
-			data.lastName,
-			data.email
-		);
+		return new Coach(data.uid, data.firstName, data.lastName, data.email);
 	}
 };

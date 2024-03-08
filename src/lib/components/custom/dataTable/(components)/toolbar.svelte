@@ -7,6 +7,9 @@
 	import { experiencelevels, modalities } from '../(data)/data';
 	import type { Writable } from 'svelte/store';
 	import type { Program } from '../(data)/schemas';
+	import type { PageData } from '../../../../../routes/(app)/$types';
+
+	export let data: PageData;
 
 	export let tableModel: TableViewModel<Program>;
 
@@ -26,14 +29,13 @@
 		}>;
 	} = pluginStates.colFilter;
 
-
 	$: showReset = Object.values({ ...$filterValues, $filterValue }).some((v) => v.length > 0);
 </script>
 
 <div class="flex items-center justify-between">
 	<div class="flex flex-1 items-center space-x-2">
 		<Input
-			placeholder="Filter tasks..."
+			placeholder="Filter programs..."
 			class="h-8 w-[150px] lg:w-[250px]"
 			type="search"
 			bind:value={$filterValue}

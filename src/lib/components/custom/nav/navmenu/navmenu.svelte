@@ -6,12 +6,23 @@
 	// @ts-ignore
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
-	import { MoonIcon, SunIcon } from 'lucide-svelte';
+	import { MoonIcon, SunIcon, User } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 	import { toggleMode } from 'mode-watcher';
 	import { auth } from '$lib/firebase/firebase.client.js';
+	import { session } from '$lib/firebase/session';
 
 	// get user from session in layout.svelte of (app)/ as a prop
+	var user: any;
+
+	let loading: boolean | undefined = true;
+	let loggedIn: boolean | undefined = false;
+
+	session.subscribe((cur: any) => {
+		loading = cur?.loading;
+		loggedIn = cur?.loggedIn;
+		user = cur?.user;
+	});
 
 	async function handleSignOut() {
 		try {
@@ -42,17 +53,20 @@
 			<span class="sr-only">Toggle theme</span>
 		</Button>
 
-		<Button variant="ghost" builders={[builder]} class="relative !m-2 h-8 w-8 rounded-full">
+		<Button variant="ghost" builders={[builder]} class="relative !m-2 !mr-4 h-8 w-8 rounded-full">
 			<Avatar.Root class="h-8 w-8">
-				<Avatar.Fallback>SC</Avatar.Fallback>
+				<Avatar.Image src={user ? user.photoURL : ''} alt="@shadcn"></Avatar.Image>
 			</Avatar.Root>
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content class="w-56" align="end">
 		<DropdownMenu.Label class="font-normal">
 			<div class="flex flex-col space-y-1">
-				<p class="text-sm font-medium leading-none">Bryan Keane</p>
-				<p class="text-xs leading-none text-muted-foreground">bryan@koach.ie</p>
+				<!-- Use user.email or a placeholder if user is not available -->
+				<p class="text-sm font-medium leading-none">{user ? user.displayName : 'User'}</p>
+				<p class="text-xs leading-none text-muted-foreground">
+					{user ? user.email : 'user@example.com'}
+				</p>
 			</div>
 		</DropdownMenu.Label>
 		<DropdownMenu.Separator />

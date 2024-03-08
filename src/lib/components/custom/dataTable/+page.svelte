@@ -1,7 +1,8 @@
 <script lang="ts">
-	import DataTable from "./(components)/data-table.svelte";
-	import data from "./(data)/tasks.json";
+	import DataTable from './(components)/data-table.svelte';
+	import data from './(data)/tasks.json';
 </script>
+
 <!-- 
 	MAYBE COME BACK TO THIS LATER
 	ACTUALLY PRETTY HANDY
