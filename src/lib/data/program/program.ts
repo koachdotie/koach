@@ -42,19 +42,19 @@ export class Program {
 }
 
 export enum Modality {
-    Hypertrophy = "Hypertrophy",
-    Strength = "Strength",
-    Powerbuilding = "Powerbuilding",
-    SportSpecific = "Sport-Specific",
-    Power = "Power",
-    Cardiovascular = "Cardiovascular"
+	Hypertrophy = 'Hypertrophy',
+	Strength = 'Strength',
+	Powerbuilding = 'Powerbuilding',
+	SportSpecific = 'Sport-Specific',
+	Power = 'Power',
+	Cardiovascular = 'Cardiovascular'
 }
 
 export enum ExperienceLevel {
-	Beginner = "Beginner",
-	LateBeginner = "Late Beginner",
-	EarlyIntermediate = "Early Intermediate",
-	Intermediate = "Intermediate",
-	LateIntermediate = "Late Intermediate",
-	Advanced = "Advanced"
+	Beginner = 'Beginner',
+	LateBeginner = 'Late Beginner',
+	EarlyIntermediate = 'Early Intermediate',
+	Intermediate = 'Intermediate',
+	LateIntermediate = 'Late Intermediate',
+	Advanced = 'Advanced'
 }

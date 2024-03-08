@@ -22,7 +22,6 @@
 			const user = userCredential.user;
 			const token = await user.getIdToken();
 
-			console.log('POSTing to /auth/session');
 			await fetch('/auth/session', {
 				method: 'POST',
 				headers: {

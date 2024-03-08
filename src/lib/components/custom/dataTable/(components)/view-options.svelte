@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { SlidersHorizontal } from "lucide-svelte";
-	import { Button } from "$lib/components/ui/button";
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
-	import type { TableViewModel } from "svelte-headless-table";
-	import type { Program } from "../(data)/schemas";
+	import { SlidersHorizontal } from 'lucide-svelte';
+	import { Button } from '$lib/components/ui/button';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import type { TableViewModel } from 'svelte-headless-table';
+	import type { Program } from '../(data)/schemas';
 
 	export let tableModel: TableViewModel<Program>;
 	const { pluginStates, flatColumns } = tableModel;
@@ -17,7 +17,7 @@
 		.filter(([, hide]) => !hide)
 		.map(([id]) => id);
 
-	const hidableCols = ["description", "modality", "experiencelevel"];
+	const hidableCols = ['description', 'modality', 'experiencelevel'];
 </script>
 
 <DropdownMenu.Root>

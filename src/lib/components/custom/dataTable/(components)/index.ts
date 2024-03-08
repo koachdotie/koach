@@ -8,4 +8,3 @@ export { default as DataTableToolbar } from './toolbar.svelte';
 export { default as DataTablePagination } from './pagination.svelte';
 export { default as DataTableViewOptions } from './view-options.svelte';
 export { default as DataTableFacetedFilter } from './faceted-filter.svelte';
-export { default as CreateProgramButton } from './create-program.svelte';

@@ -24,11 +24,6 @@ export const clientConverter = {
 		const data = snapshot.data();
 		if (!data) throw new Error('Client data not found');
 
-		return new Client(
-			data.uid,
-			data.firstName,
-			data.lastName,
-			data.email
-		);
+		return new Client(data.uid, data.firstName, data.lastName, data.email);
 	}
 };

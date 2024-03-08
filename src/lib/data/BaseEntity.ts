@@ -13,12 +13,7 @@ export abstract class BaseEntityTemplate {
 export abstract class BaseEntityInstance extends BaseEntityTemplate {
 	templateUid: string;
 
-	constructor(
-		uid: string,
-		name: string,
-		description: string,
-		templateUid: string
-	) {
+	constructor(uid: string, name: string, description: string, templateUid: string) {
 		super(uid, name, description);
 		this.templateUid = templateUid;
 	}

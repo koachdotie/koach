@@ -1,12 +1,15 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
-	import { CreateProgramButton, DataTableFacetedFilter, DataTableViewOptions } from '.';
+	import { DataTableFacetedFilter, DataTableViewOptions } from '.';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import { Button } from '$lib/components/ui/button';
 	import { Plus } from 'lucide-svelte';
 	import { experiencelevels, modalities } from '../(data)/data';
 	import type { Writable } from 'svelte/store';
 	import type { Program } from '../(data)/schemas';
+	import type { PageData } from '../../../../../routes/(app)/$types';
+
+	export let data: PageData;
 
 	export let tableModel: TableViewModel<Program>;
 
@@ -25,7 +28,6 @@
 			modality: string[];
 		}>;
 	} = pluginStates.colFilter;
-
 
 	$: showReset = Object.values({ ...$filterValues, $filterValue }).some((v) => v.length > 0);
 </script>
@@ -65,8 +67,5 @@
 		{/if}
 	</div>
 
-	<!-- <CreateProgramButton  /> -->
-
 	<DataTableViewOptions {tableModel} />
-
 </div>
