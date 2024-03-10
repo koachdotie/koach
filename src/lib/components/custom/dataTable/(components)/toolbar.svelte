@@ -7,9 +7,6 @@
 	import { experiencelevels, modalities } from '../(data)/data';
 	import type { Writable } from 'svelte/store';
 	import type { Program } from '../(data)/schemas';
-	import type { PageData } from '../../../../../routes/(app)/$types';
-
-	export let data: PageData;
 
 	export let tableModel: TableViewModel<Program>;
 

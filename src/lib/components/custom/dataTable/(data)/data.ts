@@ -10,7 +10,7 @@ import {
 	Trophy
 } from 'lucide-svelte';
 
-export const modalities = [
+export const modality = [
 	{
 		value: 'hypertrophy',
 		label: 'Hyperthrophy',
@@ -43,7 +43,7 @@ export const modalities = [
 	}
 ];
 
-export const experiencelevels = [
+export const experiencelevel = [
 	{
 		label: 'Beginner',
 		value: 'beginner'

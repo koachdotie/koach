@@ -1,30 +1,39 @@
 <script lang="ts">
-	// @ts-ignore
-	import { DataTable } from '$lib/components/custom/dataTable';
+	import { GenericDataTable } from '$lib/components/custom/generic-datatable';
+	import data from '$lib/components/custom/dataTable/(data)/tasks.json';
+	import type { TableColumnKey } from '$lib/components/custom/generic-datatable/column-schema';
+	import { potentialValues } from './program-enums';
+	let tableColumnKeys: TableColumnKey[] = [
+		{
+			accessor: 'name',
+			id: 'name',
+			header: 'Name'
+		},
+		{
+			accessor: 'description',
+			id: 'description',
+			header: 'Description'
+		},
+		{
+			accessor: 'modality',
+			id: 'modality',
+			header: 'Modality'
+		},
+		{
+			accessor: 'experienceLevel',
+			id: 'experienceLevel',
+			header: 'Experience Level'
+		}
+	];
+
 </script>
 
-<!-- <div class="m-16 flex items-center">
-	<Table.Root>
-		<Table.Caption>A list of your programs.</Table.Caption>
-		<Table.Header>
-			<Table.Row>
-				<Table.Head>Name</Table.Head>
-				<Table.Head>Description</Table.Head>
-				<Table.Head class="w-[150px]">Modality</Table.Head>
-				<Table.Head class="w-[150px]">Experience Level</Table.Head>
-			</Table.Row>
-		</Table.Header>
-		<Table.Body>
-			{#each rowItems as item}
-				<Table.Row>
-					<Table.Cell class="font-medium">{item.name}</Table.Cell>
-					<Table.Cell>{item.description}</Table.Cell>
-					<Table.Cell>{item.modality}</Table.Cell>
-					<Table.Cell>{item.experienceLevel}</Table.Cell>
-				</Table.Row>
-			{/each}
-		</Table.Body>
-	</Table.Root>
-</div> -->
-
-<DataTable />
+<div class="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+	<div class="flex items-center justify-between space-y-2">
+		<div>
+			<h2 class="text-2xl font-bold tracking-tight">Programs</h2>
+			<p class="text-muted-foreground">Blah blah im a cool data table blah</p>
+		</div>
+	</div>
+	<GenericDataTable {data} {tableColumnKeys} {potentialValues} />
+</div>

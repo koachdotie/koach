@@ -1,4 +1,4 @@
-export { default as DataTableCheckbox } from './checkbox.svelte';
+export { default as DataTableCheckbox } from './datacheckbox.svelte';
 export { default as DataTableExpLevelCell } from './cells/experienceLevel-cell.svelte';
 export { default as DataTableRowActions } from './row-actions.svelte';
 export { default as DataTableDescriptionCell } from './cells/description-cell.svelte';
