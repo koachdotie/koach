@@ -1,6 +1,6 @@
 <script lang="ts">
 	import DataTable from './(components)/data-table.svelte';
-	import data from './(data)/tasks.json';
+	import data from '../../../../routes/(app)/programs/programs.json';
 </script>
 
 <!-- 

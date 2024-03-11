@@ -1,6 +1,5 @@
 <script lang="ts">
 	export let potentialValues: EnumValueScheme[] = [];
-	console.log(potentialValues);
 	export let value: string;
 
 	const enumValue = potentialValues.find((enumValue) => enumValue.value === value);

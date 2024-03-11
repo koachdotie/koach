@@ -4,16 +4,15 @@
 	import * as Table from '$lib/components/ui/table/';
 	import {
 		addColumnFilters,
+		addPagination,
 		addSelectedRows,
 		addSortBy,
 		addTableFilter
 	} from 'svelte-headless-table/plugins';
 
-	import { RowSelectBox } from '.';
-	import RowSettings from './row-settings.svelte';
-	import ColumnHeader from './column-header.svelte';
+	import { RowSelectBox, Pagination, RowSettings, ColumnHeader, GenericCell } from '.';
 	import type { TableColumnKey } from './column-schema';
-	import GenericCell, { type EnumValueScheme } from './generic-cell.svelte';
+	import { type EnumValueScheme } from './generic-cell.svelte';
 
 	// A list of the actual data fetched from firestore
 	export let data: any[];
@@ -27,7 +26,7 @@
 		sort: addSortBy({
 			toggleOrder: ['asc', 'desc']
 		}),
-		// page: addPagination(),
+		page: addPagination(),
 		filter: addTableFilter({
 			fn: ({ filterValue, value }) => {
 				return value.toLowerCase().includes(filterValue.toLowerCase());
@@ -38,13 +37,15 @@
 	});
 
 	const dynamicColumns = tableColumnKeys.map((columnKey) => {
+		console.log('columnKey', columnKey);
 		return table.column({
 			accessor: columnKey.accessor,
 			id: columnKey.id,
 			header: columnKey.header,
 			cell: ({ value }) => {
+				console.log('value', value);
 				return createRender(GenericCell, {
-					value, 
+					value,
 					potentialValues: potentialValues.get(columnKey.id) || []
 				});
 			},
@@ -102,9 +103,7 @@
 			},
 			cell: ({ row }) => {
 				if (row.isData() && row.original) {
-					return createRender(RowSettings, {
-						row: row.original
-					});
+					return createRender(RowSettings);
 				}
 				return '';
 			}
@@ -164,5 +163,5 @@
 			</Table.Body>
 		</Table.Root>
 	</div>
-	<!-- <DataTablePagination {tableModel} /> -->
+	<Pagination {tableModel} />
 </div>

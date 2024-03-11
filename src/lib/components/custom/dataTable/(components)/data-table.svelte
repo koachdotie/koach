@@ -66,9 +66,7 @@
 		}),
 		table.column({
 			accessor: 'name',
-			header: () => {
-				return 'Name';
-			},
+			header: 'Name',
 			id: 'name',
 			plugins: {
 				sort: {

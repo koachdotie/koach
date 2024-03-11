@@ -2,8 +2,7 @@
 	import { MoreHorizontal } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { z } from 'zod';
-	export let row: typeof z.object;
+
 	// export let schema;
 	// const row = schema.parse(row);
 </script>

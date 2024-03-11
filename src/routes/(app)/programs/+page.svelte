@@ -1,8 +1,20 @@
 <script lang="ts">
 	import { GenericDataTable } from '$lib/components/custom/generic-datatable';
-	import data from '$lib/components/custom/dataTable/(data)/tasks.json';
+	import rawdata from './programs.json';
 	import type { TableColumnKey } from '$lib/components/custom/generic-datatable/column-schema';
 	import { potentialValues } from './program-enums';
+	import { programSchema, type Program } from '$lib/data/program/program-scheme';
+	import { z } from 'zod';
+
+	let data: Program[] = z.array(programSchema).parse(rawdata);
+	$: if (rawdata) {
+		try {
+			const parsedData = z.array(programSchema).parse(rawdata);
+			data = parsedData;
+		} catch (error) {
+			console.error('Data validation error:', error);
+		}
+	}
 	let tableColumnKeys: TableColumnKey[] = [
 		{
 			accessor: 'name',
@@ -25,7 +37,6 @@
 			header: 'Experience Level'
 		}
 	];
-
 </script>
 
 <div class="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
