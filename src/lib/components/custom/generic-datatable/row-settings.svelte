@@ -2,10 +2,9 @@
 	import { MoreHorizontal } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { programSchema, type Program } from '../(data)/schemas';
 
-	export let row: Program;
-	const program = programSchema.parse(row);
+	// export let schema;
+	// const row = schema.parse(row);
 </script>
 
 <DropdownMenu.Root>
@@ -21,24 +20,24 @@
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content class="w-[160px]" align="end">
 		<DropdownMenu.Item>Edit</DropdownMenu.Item>
-		<DropdownMenu.Item>Make a copy</DropdownMenu.Item>
-		<DropdownMenu.Item>Favorite</DropdownMenu.Item>
-		<!-- 
-			Later can add tags in here
-		 -->
-		<!-- <DropdownMenu.Separator /> -->
+		<DropdownMenu.Item>Make a Copy</DropdownMenu.Item>
+
+		<DropdownMenu.Separator />
+
 		<!-- <DropdownMenu.Sub>
-			<DropdownMenu.SubTrigger>Modalities</DropdownMenu.SubTrigger>
-			<DropdownMenu.SubContent>
-				<DropdownMenu.RadioGroup value={program.modality}>
+            <DropdownMenu.SubTrigger>Tags</DropdownMenu.SubTrigger>
+            <DropdownMenu.SubContent>
+				<DropdownMenu.RadioGroup value={row.tags}>
+
 					{#each modalities as modality}
-						<DropdownMenu.RadioItem value={modality.value}>
+						<DropdownMenu.RadioItem value={row.tags}>
 							{modality.label}
 						</DropdownMenu.RadioItem>
 					{/each}
 				</DropdownMenu.RadioGroup>
 			</DropdownMenu.SubContent>
-		</DropdownMenu.Sub> -->
+        </DropdownMenu.Sub> -->
+
 		<DropdownMenu.Separator />
 		<DropdownMenu.Item>
 			Delete

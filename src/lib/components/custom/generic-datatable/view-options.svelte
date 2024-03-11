@@ -3,7 +3,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import type { TableViewModel } from 'svelte-headless-table';
-	import type { Program } from '../(data)/schemas';
+    import type { Program } from '$lib/data/program/program-scheme';
 
 	export let tableModel: TableViewModel<Program>;
 	const { pluginStates, flatColumns } = tableModel;
@@ -17,7 +17,7 @@
 		.filter(([, hide]) => !hide)
 		.map(([id]) => id);
 
-	const hidableCols = ['description', 'modality', 'experiencelevel'];
+	export let hidableCols: string[];
 </script>
 
 <DropdownMenu.Root>

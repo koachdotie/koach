@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { PlusCircle } from 'lucide-svelte';
 	import { Check } from 'lucide-svelte';
 	import * as Popover from '$lib/components/ui/popover';
@@ -7,7 +7,7 @@
 	import { cn } from '$lib/utils';
 	import { Separator } from '$lib/components/ui/separator';
 	import { Badge } from '$lib/components/ui/badge';
-	import type { experiencelevels } from '../(data)/data';
+	import type { experiencelevels } from '../dataTable/(data)/data';
 
 	export let filterValues: string[] = [];
 	export let title: string;
@@ -94,4 +94,4 @@
 			</Command.List>
 		</Command.Root>
 	</Popover.Content>
-</Popover.Root>
+</Popover.Root> -->

@@ -51,7 +51,7 @@
 			{#each library as item}
 				{@const isActive = $page.url.pathname === item.href}
 
-				<div class="my-4">
+				<div class="!my-4">
 					<Button
 						href={item.href}
 						variant="ghost"

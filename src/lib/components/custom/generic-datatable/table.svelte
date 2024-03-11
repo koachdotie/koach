@@ -10,19 +10,17 @@
 		addSortBy,
 		addTableFilter
 	} from 'svelte-headless-table/plugins';
-	import {
-		DataTableCheckbox,
-		DataTableDescriptionCell,
-		DataTableExpLevelCell,
-		DataTableRowActions,
-		DataTableModalityCell,
-		DataTableColumnHeader,
-		DataTableToolbar,
-		DataTablePagination
-	} from '.';
-	import type { Program } from '../(data)/schemas';
 
-	export let data: Program[];
+	import { RowSelectBox, Pagination, RowSettings, ColumnHeader, GenericCell, Toolbar } from '.';
+	import type { TableColumnKey } from './column-schema';
+	import { type EnumValueScheme } from './generic-cell.svelte';
+
+	// A list of the actual data fetched from firestore
+	export let data: any[];
+	// Here we take in the columns that are being shown in the table
+	export let tableColumnKeys: TableColumnKey[];
+	// Here we take in the columns that are of enum values
+	export let potentialValues: Map<string, EnumValueScheme[]>;
 
 	const table = createTable(readable(data), {
 		select: addSelectedRows(),
@@ -39,88 +37,17 @@
 		hide: addHiddenColumns()
 	});
 
-	const columns = table.createColumns([
-		table.display({
-			id: 'select',
-			header: (_, { pluginStates }) => {
-				const { allPageRowsSelected } = pluginStates.select;
-				return createRender(DataTableCheckbox, {
-					checked: allPageRowsSelected,
-					'aria-label': 'Select all'
-				});
-			},
-			cell: ({ row }, { pluginStates }) => {
-				const { getRowState } = pluginStates.select;
-				const { isSelected } = getRowState(row);
-				return createRender(DataTableCheckbox, {
-					checked: isSelected,
-					'aria-label': 'Select row',
-					class: 'translate-y-[2px]'
-				});
-			},
-			plugins: {
-				sort: {
-					disable: true
-				}
-			}
-		}),
-		table.column({
-			accessor: 'name',
-			header: () => {
-				return 'Name';
-			},
-			id: 'name',
-			plugins: {
-				sort: {
-					disable: true
-				}
-			}
-		}),
-		table.column({
-			accessor: 'description',
-			header: 'Description',
-			id: 'description',
-			cell: ({ value, row }) => {
-				if (row.isData()) {
-					return createRender(DataTableDescriptionCell, {
-						value
-					});
-				}
-				return value;
-			}
-		}),
-		table.column({
-			accessor: 'modality',
-			header: 'Modality',
-			id: 'modality',
+	let hidableCols: string[] = tableColumnKeys.map((columnKey) => columnKey.id);
+
+	const dynamicColumns = tableColumnKeys.map((columnKey) => {
+		return table.column({
+			accessor: columnKey.accessor,
+			id: columnKey.id,
+			header: columnKey.header,
 			cell: ({ value }) => {
-				return createRender(DataTableModalityCell, {
-					value
-				});
-			},
-			plugins: {
-				colFilter: {
-					fn: ({ filterValue, value }) => {
-						if (filterValue.length === 0) return true;
-						if (!Array.isArray(filterValue) || typeof value !== 'string') return true;
-						return filterValue.some((filter) => {
-							return value.includes(filter);
-						});
-					},
-					initialFilterValue: [],
-					render: ({ filterValue }) => {
-						return get(filterValue);
-					}
-				}
-			}
-		}),
-		table.column({
-			accessor: 'experienceLevel',
-			id: 'experiencelevel',
-			header: 'Experience Level',
-			cell: ({ value }) => {
-				return createRender(DataTableExpLevelCell, {
-					value
+				return createRender(GenericCell, {
+					value,
+					potentialValues: potentialValues.get(columnKey.id) || []
 				});
 			},
 			plugins: {
@@ -139,7 +66,32 @@
 					}
 				}
 			}
+		});
+	});
+
+	const columns = table.createColumns([
+		table.display({
+			id: 'select',
+			header: (_, { pluginStates }) => {
+				const { allPageRowsSelected } = pluginStates.select;
+				return createRender(RowSelectBox, {
+					checked: allPageRowsSelected,
+					'aria-label': 'Select all'
+				});
+			},
+			cell: ({ row }, { pluginStates }) => {
+				const { getRowState } = pluginStates.select;
+				const { isSelected } = getRowState(row);
+				return createRender(RowSelectBox, {
+					checked: isSelected,
+					'aria-label': 'Select row',
+					class: 'translate-y-[2px]'
+				});
+			}
 		}),
+
+		...dynamicColumns,
+
 		table.display({
 			id: 'actions',
 			header: () => {
@@ -147,9 +99,7 @@
 			},
 			cell: ({ row }) => {
 				if (row.isData() && row.original) {
-					return createRender(DataTableRowActions, {
-						row: row.original
-					});
+					return createRender(RowSettings);
 				}
 				return '';
 			}
@@ -162,7 +112,7 @@
 </script>
 
 <div class="space-y-4">
-	<DataTableToolbar {tableModel} />
+	<Toolbar {tableModel} {hidableCols} />
 	<div class="rounded-md border">
 		<Table.Root {...$tableAttrs}>
 			<Table.Header>
@@ -173,9 +123,9 @@
 								<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()} let:props>
 									<Table.Head {...attrs}>
 										{#if cell.id !== 'select' && cell.id !== 'actions'}
-											<DataTableColumnHeader {props}
-												><Render of={cell.render()} /></DataTableColumnHeader
-											>
+											<ColumnHeader {props}>
+												<Render of={cell.render()} />
+											</ColumnHeader>
 										{:else}
 											<Render of={cell.render()} />
 										{/if}
@@ -209,5 +159,5 @@
 			</Table.Body>
 		</Table.Root>
 	</div>
-	<DataTablePagination {tableModel} />
+	<Pagination {tableModel} />
 </div>
