@@ -4,13 +4,14 @@
 	import * as Table from '$lib/components/ui/table/';
 	import {
 		addColumnFilters,
+		addHiddenColumns,
 		addPagination,
 		addSelectedRows,
 		addSortBy,
 		addTableFilter
 	} from 'svelte-headless-table/plugins';
 
-	import { RowSelectBox, Pagination, RowSettings, ColumnHeader, GenericCell } from '.';
+	import { RowSelectBox, Pagination, RowSettings, ColumnHeader, GenericCell, Toolbar } from '.';
 	import type { TableColumnKey } from './column-schema';
 	import { type EnumValueScheme } from './generic-cell.svelte';
 
@@ -32,18 +33,18 @@
 				return value.toLowerCase().includes(filterValue.toLowerCase());
 			}
 		}),
-		colFilter: addColumnFilters()
-		// hide: addHiddenColumns()
+		colFilter: addColumnFilters(),
+		hide: addHiddenColumns()
 	});
 
+	let hidableCols: string[] = tableColumnKeys.map((columnKey) => columnKey.id);
+
 	const dynamicColumns = tableColumnKeys.map((columnKey) => {
-		console.log('columnKey', columnKey);
 		return table.column({
 			accessor: columnKey.accessor,
 			id: columnKey.id,
 			header: columnKey.header,
 			cell: ({ value }) => {
-				console.log('value', value);
 				return createRender(GenericCell, {
 					value,
 					potentialValues: potentialValues.get(columnKey.id) || []
@@ -87,11 +88,6 @@
 					class: 'translate-y-[2px]'
 				});
 			}
-			// plugins: {
-			// 	sort: {
-			// 		disable: true
-			// 	}
-			// }
 		}),
 
 		...dynamicColumns,
@@ -116,7 +112,7 @@
 </script>
 
 <div class="space-y-4">
-	<!-- <DataTableToolbar {tableModel} /> -->
+	<Toolbar {tableModel} {hidableCols} />
 	<div class="rounded-md border">
 		<Table.Root {...$tableAttrs}>
 			<Table.Header>
