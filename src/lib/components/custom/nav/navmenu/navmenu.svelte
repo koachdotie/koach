@@ -50,7 +50,7 @@
 				class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
 			/>
 			<span class="sr-only">Toggle dark or light mode</span>
-		</Button>
+			</Button>
 
 		<Button variant="ghost" builders={[builder]} class="relative !m-2 !mr-4 h-8 w-8 rounded-full">
 			<Avatar.Root class="h-8 w-8">

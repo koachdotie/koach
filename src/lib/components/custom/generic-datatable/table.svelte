@@ -37,7 +37,9 @@
 		hide: addHiddenColumns()
 	});
 
-	let hidableCols: string[] = tableColumnKeys.map((columnKey) => columnKey.id);
+	let hidableCols: string[] = tableColumnKeys
+		.map((columnKey) => columnKey.id)
+		.filter((id) => id !== 'name');
 
 	const dynamicColumns = tableColumnKeys.map((columnKey) => {
 		return table.column({
