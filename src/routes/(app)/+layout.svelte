@@ -35,7 +35,7 @@
 
 <ModeWatcher />
 
-<div class="min-h-screen md:flex md:flex-row">
+<div class="h-screen md:flex md:flex-row">
 	<div class="border-t bg-background md:w-64">
 		<Sidebar />
 	</div>

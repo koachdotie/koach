@@ -51,27 +51,25 @@ export const experienceLevels: EnumValueScheme[] = [
 ];
 
 export const modalityEnum = z.enum([
-    "Hypertrophy",
-    "Strength",
-    "Powerbuilding",
-    "Sport-Specific",
-    "Power",
-    "Cardiovascular"
+	'Hypertrophy',
+	'Strength',
+	'Powerbuilding',
+	'Sport-Specific',
+	'Power',
+	'Cardiovascular'
 ]);
-export const experienceLevelEnum = z.enum([
-    "Beginner",
-    "Intermediate",
-    "Advanced"
-]);
+export const experienceLevelEnum = z.enum(['Beginner', 'Intermediate', 'Advanced']);
 
 export const programSchema = z.object({
 	uid: z.string().uuid(),
 	clientUid: z.string().uuid().optional(),
-	name: z.string(),
-	description: z.string(),
-    modality: modalityEnum,
-    experienceLevel: experienceLevelEnum,
-	plannedWorkouts: z.array(z.object({}))
+	details: z.object({
+		name: z.string(),
+		description: z.string(),
+		modality: modalityEnum,
+		experienceLevel: experienceLevelEnum,
+		plannedWorkouts: z.array(z.string())
+	})
 });
 
 export type Program = z.infer<typeof programSchema>;

@@ -40,11 +40,6 @@
 			bind:value={$filterValue}
 		/>
 
-		<Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex">
-			<SquarePen class="mr-2 h-4 w-4" />
-			Create
-		</Button>
-
 		<!-- {#if showReset}
 			<Button
 				on:click={() => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SlidersHorizontal } from 'lucide-svelte';
+	import { SlidersHorizontal, SquarePen } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import type { TableViewModel } from 'svelte-headless-table';
@@ -21,9 +21,12 @@
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
+		<Button variant="ghost" size="sm" class="ml-auto hidden h-8 lg:flex mr-4">
+			<SquarePen class="mr-2 h-4 w-4" />
+			Create 
+		</Button>
 		<Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex" builders={[builder]}>
-			<SlidersHorizontal class="mr-2 h-4 w-4" />
-			View
+			<SlidersHorizontal class="h-4 w-4" />
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
