@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { GenericDataTable } from '$lib/components/custom/generic-datatable';
 	import rawdata from './programs.json';
-	import type { TableColumnKey } from '$lib/components/custom/generic-datatable/column-schema';
+	import type { TableColumnKey } from '$lib/components/custom/generic-datatable/column/column-schema';
 	import { potentialValues } from './program-enums';
 	import { programSchema, type Program } from '$lib/data/program/program-scheme';
 	import { z } from 'zod';

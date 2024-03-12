@@ -3,9 +3,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import type { TableViewModel } from 'svelte-headless-table';
-    import type { Program } from '$lib/data/program/program-scheme';
 
-	export let tableModel: TableViewModel<Program>;
+	export let tableModel: TableViewModel<any>;
 	const { pluginStates, flatColumns } = tableModel;
 	const { hiddenColumnIds } = pluginStates.hide;
 

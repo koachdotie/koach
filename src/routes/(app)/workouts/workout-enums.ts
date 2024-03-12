@@ -1,4 +1,4 @@
-import type { EnumValueScheme } from "$lib/components/custom/generic-datatable/generic-cell.svelte";
+import type { EnumValueScheme } from "$lib/components/custom/generic-datatable/row/generic-cell.svelte";
 import { Dumbbell, PersonStanding, Blocks, Trophy, ArrowDown, Activity } from "lucide-svelte";
 
 export const potentialValues: Map<string, EnumValueScheme[]> = new Map([

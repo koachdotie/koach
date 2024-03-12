@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { Input } from '$lib/components/ui/input';
-	import { ViewOptions } from '.';
+	import { ViewOptions } from '..';
 	import type { TableViewModel } from 'svelte-headless-table';
 	// import { Button } from '$lib/components/ui/button';
 	// import { Plus } from 'lucide-svelte';
 	import type { Writable } from 'svelte/store';
-    import type { Program } from '$lib/data/program/program-scheme';
+	import { Button } from '$lib/components/ui/button';
+	import { SquarePen } from 'lucide-svelte';
 
-	export let tableModel: TableViewModel<Program>;
+	export let tableModel: TableViewModel<any>;
 
 	const { pluginStates } = tableModel;
 	const {
@@ -38,6 +39,11 @@
 			type="search"
 			bind:value={$filterValue}
 		/>
+
+		<Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex">
+			<SquarePen class="mr-2 h-4 w-4" />
+			Create
+		</Button>
 
 		<!-- {#if showReset}
 			<Button

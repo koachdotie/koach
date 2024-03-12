@@ -12,8 +12,8 @@
 	} from 'svelte-headless-table/plugins';
 
 	import { RowSelectBox, Pagination, RowSettings, ColumnHeader, GenericCell, Toolbar } from '.';
-	import type { TableColumnKey } from './column-schema';
-	import { type EnumValueScheme } from './generic-cell.svelte';
+	import type { TableColumnKey } from './column/column-schema';
+	import { type EnumValueScheme } from './row/generic-cell.svelte';
 
 	// A list of the actual data fetched from firestore
 	export let data: any[];

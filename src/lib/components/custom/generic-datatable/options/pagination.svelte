@@ -6,10 +6,8 @@
 	import { ArrowLeft } from 'lucide-svelte';
 	import * as Select from '$lib/components/ui/select';
 	import type { TableViewModel } from 'svelte-headless-table';
-	import type { AnyPlugins } from 'svelte-headless-table/plugins';
-	import type { Program } from '$lib/data/program/program-scheme';
 
-	export let tableModel: TableViewModel<Program>;
+	export let tableModel: TableViewModel<any>;
 
 	const { pageRows, pluginStates, rows } = tableModel;
 
