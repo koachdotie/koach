@@ -14,6 +14,7 @@
 	import { RowSelectBox, Pagination, RowSettings, ColumnHeader, GenericCell, Toolbar } from '.';
 	import type { TableColumnKey } from './column/column-schema';
 	import { type EnumValueScheme } from './row/generic-cell.svelte';
+
 	import type { PageData } from '../../../../routes/(app)/programs/$types';
 
 	// A list of the actual data fetched from firestore
