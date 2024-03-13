@@ -12,19 +12,15 @@
 	} from 'svelte-headless-table/plugins';
 
 	import { RowSelectBox, Pagination, RowSettings, ColumnHeader, GenericCell, Toolbar } from '.';
-	import { potentialValues } from '../../../../routes/(app)/programs/program-enums';
-	import type { Program } from '$lib/data/program/program-scheme';
-	import { database } from 'firebase-admin';
+	import type { TableColumnKey } from './column/column-schema';
+	import { type EnumValueScheme } from './row/generic-cell.svelte';
 
-	export let data: Program[];
-
-	let tableColumnKeys = database.details.map((column) => {
-		return {
-			accessor: column.accessor,
-			id: column.id,
-			header: column.header
-		};
-	});
+	// A list of the actual data fetched from firestore
+	export let data: any[];
+	// Here we take in the columns that are being shown in the table
+	export let tableColumnKeys: TableColumnKey[];
+	// Here we take in the columns that are of enum values
+	export let potentialValues: Map<string, EnumValueScheme[]>;
 
 	const table = createTable(readable(data), {
 		select: addSelectedRows(),

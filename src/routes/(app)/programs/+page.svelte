@@ -2,10 +2,9 @@
 	import { GenericDataTable } from '$lib/components/custom/generic-datatable';
 	import rawdata from './programs.json';
 	import type { TableColumnKey } from '$lib/components/custom/generic-datatable/column/column-schema';
+	import { potentialValues } from './program-enums';
 	import { programSchema, type Program } from '$lib/data/program/program-scheme';
 	import { z } from 'zod';
-
-	let schema = programSchema;
 
 	let data: Program[] = z.array(programSchema).parse(rawdata);
 	$: if (rawdata) {
@@ -16,6 +15,28 @@
 			console.error('Data validation error:', error);
 		}
 	}
+	let tableColumnKeys: TableColumnKey[] = [
+		{
+			accessor: 'name',
+			id: 'name',
+			header: 'Name'
+		},
+		{
+			accessor: 'description',
+			id: 'description',
+			header: 'Description'
+		},
+		{
+			accessor: 'modality',
+			id: 'modality',
+			header: 'Modality'
+		},
+		{
+			accessor: 'experienceLevel',
+			id: 'experienceLevel',
+			header: 'Experience Level'
+		}
+	];
 </script>
 
 <div class="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
@@ -25,5 +46,5 @@
 			<p class="text-muted-foreground">Blah blah im a cool data table blah</p>
 		</div>
 	</div>
-	<GenericDataTable {data} />
+	<GenericDataTable {data} {tableColumnKeys} {potentialValues} />
 </div>
