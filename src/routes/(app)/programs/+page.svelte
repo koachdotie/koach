@@ -2,15 +2,18 @@
 	import { GenericDataTable } from '$lib/components/custom/generic-datatable';
 	import rawdata from './programs.json';
 	import type { TableColumnKey } from '$lib/components/custom/generic-datatable/column/column-schema';
-	import { potentialValues } from './program-enums';
+	import { potentialValues } from '../../../lib/data/program/program-enums';
 	import { programSchema, type Program } from '$lib/data/program/program-scheme';
 	import { z } from 'zod';
+	import type { PageData } from './$types';
 
-	let data: Program[] = z.array(programSchema).parse(rawdata);
+	export let data: PageData;
+
+	let programData: Program[] = z.array(programSchema).parse(rawdata);
 	$: if (rawdata) {
 		try {
 			const parsedData = z.array(programSchema).parse(rawdata);
-			data = parsedData;
+			programData = parsedData;
 		} catch (error) {
 			console.error('Data validation error:', error);
 		}
@@ -51,5 +54,5 @@
 			<p class="text-muted-foreground">Blah blah im a cool data table blah</p>
 		</div>
 	</div>
-	<GenericDataTable {data} {tableColumnKeys} {potentialValues} />
+	<GenericDataTable data={programData} {tableColumnKeys} {potentialValues} pageData={data} />
 </div>

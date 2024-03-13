@@ -4,6 +4,7 @@
 	import type { TableViewModel } from 'svelte-headless-table';
 	import type { Writable } from 'svelte/store';
 	import CreateProgram from '../../dialogs/create-program/create-program.svelte';
+	import type { PageData } from '../../../../../routes/(app)/programs/$types';
 	export let tableModel: TableViewModel<any>;
 
 	const { pluginStates } = tableModel;
@@ -14,6 +15,8 @@
 	} = pluginStates.filter;
 
 	export let hidableCols: string[];
+
+	export let pageData: PageData;
 </script>
 
 <div class="flex items-center justify-between">
@@ -25,7 +28,7 @@
 			bind:value={$filterValue}
 		/>
 
-		<CreateProgram />
+		<CreateProgram dialogData={pageData.form} />
 	</div>
 
 	<ViewOptions {tableModel} {hidableCols} />
