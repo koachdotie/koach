@@ -3,9 +3,7 @@
 	import { ViewOptions } from '..';
 	import type { TableViewModel } from 'svelte-headless-table';
 	import type { Writable } from 'svelte/store';
-	import { Button } from '$lib/components/ui/button';
-	import { SquarePen } from 'lucide-svelte';
-
+	import CreateProgram from '../../dialogs/create-program/create-program.svelte';
 	export let tableModel: TableViewModel<any>;
 
 	const { pluginStates } = tableModel;
@@ -27,10 +25,7 @@
 			bind:value={$filterValue}
 		/>
 
-		<Button variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex">
-			<SquarePen class="mr-2 h-4 w-4" />
-			Create
-		</Button>
+		<CreateProgram />
 	</div>
 
 	<ViewOptions {tableModel} {hidableCols} />

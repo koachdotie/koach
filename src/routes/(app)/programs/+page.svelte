@@ -35,6 +35,11 @@
 			accessor: 'experienceLevel',
 			id: 'experienceLevel',
 			header: 'Experience Level'
+		},
+		{
+			accessor: 'weeks',
+			id: 'weeks',
+			header: 'Weeks'
 		}
 	];
 </script>

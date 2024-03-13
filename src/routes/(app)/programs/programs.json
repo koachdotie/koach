@@ -1,11 +1,52 @@
 [
-	{
-		"uid": "de982a2c-878c-4de0-929a-d4a598fd14ec",
-		"clientUid": "eafd3fc9-3ef0-44cc-9d17-6c824dda6123",
-		"name": "Beginner Strength Training",
-		"description": "A program designed for beginners focusing on building foundational strength.",
-		"modality": "Strength",
-		"experienceLevel": "Beginner",
-		"plannedWorkouts": []
-	}
+    {
+        "uid": "c52dd9e7-e5cb-494c-9dfb-130cb60ff98a",
+        "clientUid": "c52dd9e7-e5cb-494c-9dfb-130cb60ff98a",
+        "name": "Intermediate Cardio Program",
+        "description": "A cardio program designed to improve endurance and cardiovascular health.",
+        "modality": "Cardiovascular",
+        "experienceLevel": "Intermediate",
+        "weeks": 8,
+        "plannedWorkouts": []
+    },
+    {
+        "uid": "c52dd9e7-e5cb-494c-9dfb-130cb60ff98a",
+        "clientUid": "c52dd9e7-e5cb-494c-9dfb-130cb60ff98a",
+        "name": "Advanced Flexibility Training",
+        "description": "Enhance your flexibility and range of motion with advanced stretching routines.",
+        "modality": "Flexibility",
+        "experienceLevel": "Advanced",
+        "weeks": 6,
+        "plannedWorkouts": []
+    },
+    {
+        "uid": "3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f",
+        "clientUid": "fedcba98-7654-3210-fedc-ba9876543210",
+        "name": "Powerlifting Basics",
+        "description": "Build strength and power with foundational powerlifting techniques.",
+        "modality": "Strength",
+        "experienceLevel": "Beginner",
+        "weeks": 12,
+        "plannedWorkouts": []
+    },
+    {
+        "uid": "c52dd9e7-e5cb-494c-9dfb-130cb60ff98a",
+        "clientUid": "c52dd9e7-e5cb-494c-9dfb-130cb60ff98a",
+        "name": "Yoga for Runners",
+        "description": "A yoga program tailored for runners looking to improve flexibility and recovery.",
+        "modality": "Flexibility",
+        "experienceLevel": "Intermediate",
+        "weeks": 4,
+        "plannedWorkouts": []
+    },
+    {
+        "uid": "c52dd9e7-e5cb-494c-9dfb-130cb60ff98a",
+        "clientUid": "c52dd9e7-e5cb-494c-9dfb-130cb60ff98a",
+        "name": "Sport-Specific Agility Training",
+        "description": "Enhance your agility and performance in your specific sport with targeted exercises.",
+        "modality": "Sport-Specific",
+        "experienceLevel": "Advanced",
+        "weeks": 10,
+        "plannedWorkouts": []
+    }
 ]

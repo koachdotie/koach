@@ -56,7 +56,8 @@ export const modalityEnum = z.enum([
     "Powerbuilding",
     "Sport-Specific",
     "Power",
-    "Cardiovascular"
+    "Cardiovascular",
+	"Flexibility"
 ]);
 export const experienceLevelEnum = z.enum([
     "Beginner",
@@ -71,6 +72,7 @@ export const programSchema = z.object({
 	description: z.string(),
     modality: modalityEnum,
     experienceLevel: experienceLevelEnum,
+	weeks: z.number(),
 	plannedWorkouts: z.array(z.object({}))
 });
 
