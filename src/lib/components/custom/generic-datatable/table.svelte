@@ -12,8 +12,10 @@
 	} from 'svelte-headless-table/plugins';
 
 	import { RowSelectBox, Pagination, RowSettings, ColumnHeader, GenericCell, Toolbar } from '.';
-	import type { TableColumnKey } from './column-schema';
-	import { type EnumValueScheme } from './generic-cell.svelte';
+	import type { TableColumnKey } from './column/column-schema';
+	import { type EnumValueScheme } from './row/generic-cell.svelte';
+
+	import type { PageData } from '../../../../routes/(app)/programs/$types';
 
 	// A list of the actual data fetched from firestore
 	export let data: any[];
@@ -21,6 +23,8 @@
 	export let tableColumnKeys: TableColumnKey[];
 	// Here we take in the columns that are of enum values
 	export let potentialValues: Map<string, EnumValueScheme[]>;
+
+	export let pageData: PageData;
 
 	const table = createTable(readable(data), {
 		select: addSelectedRows(),
@@ -37,7 +41,9 @@
 		hide: addHiddenColumns()
 	});
 
-	let hidableCols: string[] = tableColumnKeys.map((columnKey) => columnKey.id);
+	let hidableCols: string[] = tableColumnKeys
+		.map((columnKey) => columnKey.id)
+		.filter((id) => id !== 'name');
 
 	const dynamicColumns = tableColumnKeys.map((columnKey) => {
 		return table.column({
@@ -112,7 +118,7 @@
 </script>
 
 <div class="space-y-4">
-	<Toolbar {tableModel} {hidableCols} />
+	<Toolbar {tableModel} {hidableCols} {pageData} />
 	<div class="rounded-md border">
 		<Table.Root {...$tableAttrs}>
 			<Table.Header>

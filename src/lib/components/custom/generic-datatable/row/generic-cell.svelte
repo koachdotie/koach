@@ -1,18 +1,18 @@
-<script lang="ts">
-	export let potentialValues: EnumValueScheme[] = [];
-	export let value: string;
-
-	const enumValue = potentialValues.find((enumValue) => enumValue.value === value);
-</script>
-
 <script lang="ts" context="module">
-	import type { ComponentType } from "svelte";
+	import type { ComponentType } from 'svelte';
 
 	export type EnumValueScheme = {
 		value: string;
 		label: string;
 		icon?: ComponentType;
 	};
+</script>
+
+<script lang="ts">
+	export let potentialValues: EnumValueScheme[] = [];
+	export let value: string;
+
+	const enumValue = potentialValues.find((enumValue) => enumValue.value === value);
 </script>
 
 {#if enumValue}

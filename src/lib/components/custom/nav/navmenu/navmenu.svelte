@@ -1,16 +1,13 @@
 <script lang="ts">
-	// @ts-ignore - ignoring below because of weird import error i dont care to fix rn
 	import * as Avatar from '$lib/components/ui/avatar';
-	// @ts-ignore
 	import { Button } from '$lib/components/ui/button';
-	// @ts-ignore
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-
-	import { MoonIcon, SunIcon, User } from 'lucide-svelte';
+	import { MoonIcon, SunIcon } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 	import { toggleMode } from 'mode-watcher';
 	import { auth } from '$lib/firebase/firebase.client.js';
 	import { session } from '$lib/firebase/session';
+	import FeedbackPopover from './feedback-popover.svelte';
 
 	// get user from session in layout.svelte of (app)/ as a prop
 	var user: any;
@@ -43,14 +40,16 @@
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger asChild let:builder>
-		<Button on:click={toggleMode} variant="outline" size="icon">
+		<FeedbackPopover />
+
+		<Button on:click={toggleMode} variant="ghost" size="icon" class="!ml-2">
 			<SunIcon
 				class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
 			/>
 			<MoonIcon
 				class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
 			/>
-			<span class="sr-only">Toggle theme</span>
+			<span class="sr-only">Toggle dark or light mode</span>
 		</Button>
 
 		<Button variant="ghost" builders={[builder]} class="relative !m-2 !mr-4 h-8 w-8 rounded-full">

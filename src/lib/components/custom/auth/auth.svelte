@@ -1,9 +1,5 @@
 <script lang="ts">
-	// @ts-ignore
-	import { Icons } from '$lib/components/icons';
-	// @ts-ignore
 	import { Button } from '$lib/components/ui/button';
-	// @ts-ignore
 	import { cn } from '$lib/utils.js';
 	import { page } from '$app/stores';
 	import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
@@ -11,6 +7,7 @@
 	import { session } from '$lib/firebase/session.js';
 
 	import { afterRegister } from '$lib/firebase/helpers/route.helper.js';
+	import { LoaderIcon } from 'lucide-svelte';
 	let className: string | undefined | null = undefined;
 	export { className as class };
 	let isLoading = false;
@@ -55,9 +52,13 @@
 		on:click={() => handleSignIn(new GoogleAuthProvider())}
 	>
 		{#if isLoading}
-			<Icons.spinner class="m-auto animate-spin" style="width: 1rem; height: 1rem;" />
+			<LoaderIcon class="m-auto animate-spin" style="width: 1rem; height: 1rem;" />
 		{:else}
-			<Icons.google class="m-auto" style="width: 1rem; height: 1rem;" />
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+				><title>google</title><path
+					d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z"
+				/></svg
+			>
 		{/if}
 	</Button>
 </div>

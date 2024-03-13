@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { GenericDataTable } from '$lib/components/custom/generic-datatable';
 	import data from './workouts.json';
-	import type { TableColumnKey } from '$lib/components/custom/generic-datatable/column-schema';
+	import type { TableColumnKey } from '$lib/components/custom/generic-datatable/column/column-schema';
 	import { potentialValues } from './workout-enums';
 	let tableColumnKeys: TableColumnKey[] = [
 		{
