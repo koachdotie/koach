@@ -1,9 +1,7 @@
 <script lang="ts">
-	import { Label } from '$lib/components/ui/label';
 	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
 	import * as Popover from '$lib/components/ui/popover';
-	import { Bug, MessageCircleHeart, Send } from 'lucide-svelte';
+	import { MessageCircleHeart, Send } from 'lucide-svelte';
 	import { Textarea } from '$lib/components/ui/textarea';
 </script>
 
