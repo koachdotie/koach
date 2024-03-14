@@ -17,20 +17,20 @@
 		loggedIn = cur?.loggedIn;
 	});
 
-	onMount(async () => {
-		const user: any = await data.getAuthUser();
+	// onMount(async () => {
+	// 	const user: any = await data.getAuthUser();
 
-		const loggedIn = !!user;
-		session.update((cur: any) => {
-			loading = false;
-			return {
-				...cur,
-				user,
-				loggedIn,
-				loading: false
-			};
-		});
-	});
+	// 	const loggedIn = !!user;
+	// 	session.update((cur: any) => {
+	// 		loading = false;
+	// 		return {
+	// 			...cur,
+	// 			user,
+	// 			loggedIn,
+	// 			loading: false
+	// 		};
+	// 	});
+	// });
 </script>
 
 <ModeWatcher />
@@ -45,7 +45,7 @@
 			<div class="border-t bg-background">
 				<div class="relative flex min-h-screen flex-col">
 					<div class="ml-auto flex items-center space-x-4">
-						<Navmenu />
+						<Navmenu {data} />
 					</div>
 					<div class="overflow-hidden rounded-[0.5rem] border bg-background shadow-xl"></div>
 

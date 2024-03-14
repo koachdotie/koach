@@ -8,31 +8,34 @@
 
 	import { afterRegister } from '$lib/firebase/helpers/route.helper.js';
 	import { LoaderIcon } from 'lucide-svelte';
-	import { supabase } from '$lib/supabase';
 	let className: string | undefined | null = undefined;
 	export { className as class };
 	let isLoading = false;
 
-	async function handleSignin2() {
-		const { data, error } = await supabase.auth.signInWithOAuth({
+	export let data: any;
+
+	let { supabase } = data;
+	$: ({ supabase } = data);
+
+	const handleSignUp = async () => {
+		await supabase.auth.signInWithPopup({
 			provider: 'google',
 			options: {
-				queryParams: {
-					access_type: 'offline',
-					prompt: 'consent'
-				}
+				redirectTo: `https://ygeaowexmypsyisfgjpl.supabase.co/auth/v1/callback`
 			}
 		});
+	};
 
-		if (!error) {
-			console.log('data', data);
-		} else {
-			console.error('Error signing in with Google:', error);
-		}
-		console.log('data', data, 'error', error);
-	}
+	const handleSignIn = async () => {
+		await supabase.auth.signInWithOAuth({
+			provider: 'google',
+			options: {
+				redirectTo: `https://ygeaowexmypsyisfgjpl.supabase.co/auth/v1/callback`
+			}
+		});
+	};
 
-	async function handleSignIn(provider: GoogleAuthProvider) {
+	async function handleSignInOld(provider: GoogleAuthProvider) {
 		isLoading = true;
 		try {
 			const userCredential = await signInWithPopup(auth, provider);
@@ -69,7 +72,7 @@
 		type="button"
 		disabled={isLoading}
 		class="flex h-12 w-12 items-center justify-center"
-		on:click={handleSignin2}
+		on:click={handleSignIn}
 	>
 		{#if isLoading}
 			<LoaderIcon class="m-auto animate-spin" style="width: 1rem; height: 1rem;" />

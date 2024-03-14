@@ -9,6 +9,15 @@
 	import { session } from '$lib/firebase/session';
 	import FeedbackPopover from './feedback-popover.svelte';
 
+	export let data: any;
+
+	let { supabase } = data;
+	$: ({ supabase } = data);
+
+	const handleSignOut = async () => {
+		await supabase.auth.signOut();
+	};
+
 	// get user from session in layout.svelte of (app)/ as a prop
 	var user: any;
 
@@ -21,7 +30,7 @@
 		user = cur?.user;
 	});
 
-	async function handleSignOut() {
+	async function handleSignOutOld() {
 		try {
 			auth.signOut();
 
