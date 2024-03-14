@@ -3,10 +3,8 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { MoonIcon, SunIcon } from 'lucide-svelte';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { toggleMode } from 'mode-watcher';
-	import { auth } from '$lib/firebase/firebase.client.js';
-	import { session } from '$lib/firebase/session';
 	import FeedbackPopover from './feedback-popover.svelte';
 
 	export let data: any;
@@ -16,35 +14,13 @@
 
 	const handleSignOut = async () => {
 		await supabase.auth.signOut();
+		invalidateAll();
 	};
 
-	// get user from session in layout.svelte of (app)/ as a prop
 	var user: any;
 
 	let loading: boolean | undefined = true;
 	let loggedIn: boolean | undefined = false;
-
-	session.subscribe((cur: any) => {
-		loading = cur?.loading;
-		loggedIn = cur?.loggedIn;
-		user = cur?.user;
-	});
-
-	async function handleSignOutOld() {
-		try {
-			auth.signOut();
-
-			// goodbye cookkie
-			await fetch('/auth/session', {
-				method: 'DELETE'
-			});
-
-			// back to auth
-			await goto('/auth', { invalidateAll: true });
-		} catch (error) {
-			console.error('Error signing out:', error);
-		}
-	}
 </script>
 
 <DropdownMenu.Root>
@@ -77,22 +53,6 @@
 				</p>
 			</div>
 		</DropdownMenu.Label>
-		<DropdownMenu.Separator />
-		<DropdownMenu.Group>
-			<DropdownMenu.Item>
-				Profile
-				<DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>
-				Billing
-				<DropdownMenu.Shortcut>⌘B</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>
-				Settings
-				<DropdownMenu.Shortcut>⌘S</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>New Team</DropdownMenu.Item>
-		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 
 		<DropdownMenu.Item on:click={handleSignOut} class="hover:cursor-pointer">

@@ -1,12 +1,9 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { cn } from '$lib/utils.js';
+	import { cn } from '$lib/utils/utils.js';
 	import { page } from '$app/stores';
-	import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-	import { auth } from '$lib/firebase/firebase.client.js';
-	import { session } from '$lib/firebase/session.js';
 
-	import { afterRegister } from '$lib/firebase/helpers/route.helper.js';
+	// import { afterRegister } from '$lib/route.helper.js';
 	import { LoaderIcon } from 'lucide-svelte';
 	let className: string | undefined | null = undefined;
 	export { className as class };
@@ -34,36 +31,6 @@
 			}
 		});
 	};
-
-	async function handleSignInOld(provider: GoogleAuthProvider) {
-		isLoading = true;
-		try {
-			const userCredential = await signInWithPopup(auth, provider);
-			const user = userCredential.user;
-			const token = await user.getIdToken();
-
-			await fetch('/auth/session', {
-				method: 'POST',
-				headers: {
-					authorization: `Bearer ${token}`
-				},
-				credentials: 'include'
-			});
-
-			session.update((currentSession) => ({
-				...currentSession,
-				user: user,
-				loggedIn: true
-			}));
-
-			console.log('User signed in as', user.email);
-			afterRegister($page.url, user, true);
-		} catch (error) {
-			console.error('Error signing in with Google:', error);
-		} finally {
-			isLoading = false;
-		}
-	}
 </script>
 
 <div class={cn('flex justify-center gap-4', className)} {...$$restProps}>

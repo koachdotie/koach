@@ -2,7 +2,7 @@
 	import { ArrowUpDown } from 'lucide-svelte';
 	import { ArrowDown } from 'lucide-svelte';
 	import { ArrowUp } from 'lucide-svelte';
-	import { cn } from '$lib/utils';
+	import { cn } from '$lib/utils/utils';
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 
