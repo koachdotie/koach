@@ -7,8 +7,9 @@
 
 <Popover.Root>
 	<Popover.Trigger asChild let:builder>
-		<Button variant="ghost" size="icon" builders={[builder]}>
-			<MessageCircleHeart class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 " />
+		<Button variant="outline" builders={[builder]}>
+			<MessageCircleHeart class="m4-2 mr-2 h-[1.2rem] w-[1.2rem] rotate-0 scale-100" /> Feedback
+
 			<span class="sr-only">Leave feedback button</span>
 		</Button>
 	</Popover.Trigger>

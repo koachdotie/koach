@@ -4,6 +4,12 @@ import { programSchema } from '$lib/data/program/program-scheme.js';
 import { zod } from 'sveltekit-superforms/adapters';
 import { createProgramSchema } from '../../../lib/components/custom/dialogs/create-program/schema';
 import { fail } from '@sveltejs/kit';
+import { supabase } from '$lib/supabase/client.js';
+
+async function createProgram() {
+	const { error } = await supabase.from('programs').insert({ name: 'My Program' });
+	console.log('error: ', error?.message);
+}
 
 export const load: PageServerLoad = async () => {
 	return {
@@ -19,6 +25,8 @@ export const actions: Actions = {
 				form
 			});
 		}
+		createProgram();
+		console.log('form', form);
 		return {
 			form
 		};

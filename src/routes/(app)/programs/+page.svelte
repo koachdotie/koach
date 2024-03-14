@@ -38,7 +38,7 @@
 			accessor: 'experienceLevel',
 			id: 'experienceLevel',
 			header: 'Experience Level'
-		},
+		}
 	];
 </script>
 
