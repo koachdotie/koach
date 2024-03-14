@@ -19,14 +19,7 @@
 
 	let library: { href: string; title: string; icon: any }[] = [
 		{ href: '/', title: 'Dashboard', icon: HomeIcon },
-		{ href: '/programs', title: 'Programs', icon: NotebookTabs },
-		{ href: '/workouts', title: 'Workouts', icon: DumbbellIcon },
-		{ href: '/exercises', title: 'Exercises', icon: PersonStanding }
-	];
-
-	let social: { href: string; title: string; icon: any }[] = [
-		{ href: '/clients', title: 'Clients', icon: Users },
-		{ href: '/messages', title: 'Messages', icon: MessageSquare }
+		{ href: '/programs', title: 'Programs', icon: NotebookTabs }
 	];
 
 	const [send, receive] = crossfade({
@@ -52,50 +45,6 @@
 				{@const isActive = $page.url.pathname === item.href}
 
 				<div class="!my-4">
-					<Button
-						href={item.href}
-						variant="ghost"
-						class={cn(
-							'relative flex w-full items-center justify-start hover:bg-transparent',
-							!isActive && 'hover:underline',
-							isActive ? 'text-white' : 'text-gray-400' // Active items are white, others are grey
-						)}
-						data-sveltekit-noscroll
-					>
-						{#if isActive}
-							<div
-								class="absolute inset-0 rounded-md bg-muted"
-								in:send={{ key: 'active-sidebar-tab' }}
-								out:receive={{ key: 'active-sidebar-tab' }}
-							/>
-						{/if}
-
-						<div class="relative flex">
-							<svelte:component
-								this={item.icon}
-								class={isActive ? 'mr-4 text-white' : 'mr-4 text-gray-400'}
-							/>
-							<span class={isActive ? 'text-white' : 'text-gray-400'}>
-								{item.title}
-							</span>
-						</div>
-					</Button>
-				</div>
-			{/each}
-		</div>
-	</div>
-
-	<div class="space-y-4 px-3 py-4">
-		<h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Social</h2>
-		<!-- 
-			Taken from the shadcn-svelte example
-			https://github.com/huntabyte/shadcn-svelte/blob/main/apps/www/src/routes/examples/forms/(components)/sidebar-nav.svelte
-		 -->
-		<div class="space-y-1">
-			{#each social as item}
-				{@const isActive = $page.url.pathname === item.href}
-
-				<div class="my-4">
 					<Button
 						href={item.href}
 						variant="ghost"
