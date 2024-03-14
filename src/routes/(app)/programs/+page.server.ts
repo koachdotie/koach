@@ -4,7 +4,7 @@ import { programSchema } from '$lib/data/program/program-scheme.js';
 import { zod } from 'sveltekit-superforms/adapters';
 import { createProgramSchema } from '../../../lib/components/custom/dialogs/create-program/schema';
 import { fail } from '@sveltejs/kit';
-import { supabase } from '$lib/supabase/client.js';
+import { supabase } from '$lib/supabase';
 
 async function createProgram() {
 	const { error } = await supabase.from('programs').insert({ name: 'My Program' });

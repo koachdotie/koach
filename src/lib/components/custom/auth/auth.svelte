@@ -8,9 +8,29 @@
 
 	import { afterRegister } from '$lib/firebase/helpers/route.helper.js';
 	import { LoaderIcon } from 'lucide-svelte';
+	import { supabase } from '$lib/supabase';
 	let className: string | undefined | null = undefined;
 	export { className as class };
 	let isLoading = false;
+
+	async function handleSignin2() {
+		const { data, error } = await supabase.auth.signInWithOAuth({
+			provider: 'google',
+			options: {
+				queryParams: {
+					access_type: 'offline',
+					prompt: 'consent'
+				}
+			}
+		});
+
+		if (!error) {
+			console.log('data', data);
+		} else {
+			console.error('Error signing in with Google:', error);
+		}
+		console.log('data', data, 'error', error);
+	}
 
 	async function handleSignIn(provider: GoogleAuthProvider) {
 		isLoading = true;
@@ -49,7 +69,7 @@
 		type="button"
 		disabled={isLoading}
 		class="flex h-12 w-12 items-center justify-center"
-		on:click={() => handleSignIn(new GoogleAuthProvider())}
+		on:click={handleSignin2}
 	>
 		{#if isLoading}
 			<LoaderIcon class="m-auto animate-spin" style="width: 1rem; height: 1rem;" />
