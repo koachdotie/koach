@@ -1,26 +1,31 @@
-/** @type {import('./$types').LayoutLoad} */
+import { createBrowserClient, isBrowser, parse } from '@supabase/ssr';
 
-import { initializeFirebase, auth } from '$lib/firebase/firebase.client.js';
-import { browser } from '$app/environment';
-import { onAuthStateChanged } from 'firebase/auth';
+export const load = async ({ fetch, data, depends }) => {
+	depends('supabase:auth');
 
-export async function load({ url }) {
-	if (browser) {
-		try {
-			initializeFirebase();
-		} catch (ex) {
-			console.error(ex);
+	const supabase = createBrowserClient(
+		import.meta.env.VITE_SUPABASE_URL,
+		import.meta.env.VITE_SUPABASE_ANON_KEY,
+		{
+			global: {
+				fetch
+			},
+			cookies: {
+				get(key) {
+					if (!isBrowser()) {
+						return JSON.stringify(data.session);
+					}
+
+					const cookie = parse(document.cookie);
+					return cookie[key];
+				}
+			}
 		}
-	}
+	);
 
-	function getAuthUser() {
-		return new Promise((resolve) => {
-			onAuthStateChanged(auth, (user) => resolve(user ? user : false));
-		});
-	}
-
-	return {
-		getAuthUser: getAuthUser,
-		url: url.pathname
-	};
-}
+	const {
+		data: { session }
+	} = await supabase.auth.getSession();
+	console.log('\n=> +layout.ts session userId: ', session?.user.id);
+	return { supabase, session };
+};

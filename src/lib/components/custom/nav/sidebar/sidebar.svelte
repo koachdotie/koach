@@ -1,16 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	// @ts-ignore
 	import { Button } from '$lib/components/ui/button';
-	import { cn } from '$lib/utils.js';
-	import {
-		DumbbellIcon,
-		HomeIcon,
-		MessageSquare,
-		NotebookTabs,
-		PersonStanding,
-		Users
-	} from 'lucide-svelte';
+	import { cn } from '$lib/utils/utils.js';
+	import { HomeIcon, NotebookTabs } from 'lucide-svelte';
 	import { cubicInOut } from 'svelte/easing';
 	import { crossfade } from 'svelte/transition';
 

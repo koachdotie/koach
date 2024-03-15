@@ -5,37 +5,27 @@
 	import { MoonIcon, SunIcon } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 	import { toggleMode } from 'mode-watcher';
-	import { auth } from '$lib/firebase/firebase.client.js';
-	import { session } from '$lib/firebase/session';
 	import FeedbackPopover from './feedback-popover.svelte';
+	import type { PageData } from '../../../../../routes/(app)/$types';
 
-	// get user from session in layout.svelte of (app)/ as a prop
-	var user: any;
+	export let data: PageData;
+
+	let { supabase } = data;
+	$: ({ supabase } = data);
+
+	const handleSignOut = async () => {
+		await supabase.auth.signOut();
+		goto('/auth', { invalidateAll: true });
+	};
+
+	// Info for the dropdown menu
+	$: user = data.session?.user;
+	$: name = user?.user_metadata?.full_name || '';
+	$: email = user?.email || '';
+	$: avatarUrl = user?.user_metadata?.avatar_url || '';
 
 	let loading: boolean | undefined = true;
 	let loggedIn: boolean | undefined = false;
-
-	session.subscribe((cur: any) => {
-		loading = cur?.loading;
-		loggedIn = cur?.loggedIn;
-		user = cur?.user;
-	});
-
-	async function handleSignOut() {
-		try {
-			auth.signOut();
-
-			// goodbye cookkie
-			await fetch('/auth/session', {
-				method: 'DELETE'
-			});
-
-			// back to auth
-			await goto('/auth', { invalidateAll: true });
-		} catch (error) {
-			console.error('Error signing out:', error);
-		}
-	}
 </script>
 
 <DropdownMenu.Root>
@@ -54,7 +44,7 @@
 
 		<Button variant="ghost" builders={[builder]} class="relative !m-2 !mr-4 h-8 w-8 rounded-full">
 			<Avatar.Root class="h-8 w-8">
-				<Avatar.Image src={user ? user.photoURL : ''} alt="@shadcn"></Avatar.Image>
+				<Avatar.Image src={avatarUrl} alt="@shadcn"></Avatar.Image>
 			</Avatar.Root>
 		</Button>
 	</DropdownMenu.Trigger>
@@ -62,28 +52,12 @@
 		<DropdownMenu.Label class="font-normal">
 			<div class="flex flex-col space-y-1">
 				<!-- Use user.email or a placeholder if user is not available -->
-				<p class="text-sm font-medium leading-none">{user ? user.displayName : 'User'}</p>
+				<p class="text-sm font-medium leading-none">{name}</p>
 				<p class="text-xs leading-none text-muted-foreground">
-					{user ? user.email : 'user@example.com'}
+					{email}
 				</p>
 			</div>
 		</DropdownMenu.Label>
-		<DropdownMenu.Separator />
-		<DropdownMenu.Group>
-			<DropdownMenu.Item>
-				Profile
-				<DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>
-				Billing
-				<DropdownMenu.Shortcut>⌘B</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>
-				Settings
-				<DropdownMenu.Shortcut>⌘S</DropdownMenu.Shortcut>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>New Team</DropdownMenu.Item>
-		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 
 		<DropdownMenu.Item on:click={handleSignOut} class="hover:cursor-pointer">

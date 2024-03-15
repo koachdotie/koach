@@ -4,14 +4,16 @@ import { programSchema } from '$lib/data/program/program-scheme.js';
 import { zod } from 'sveltekit-superforms/adapters';
 import { createProgramSchema } from '../../../lib/components/custom/dialogs/create-program/schema';
 import { fail } from '@sveltejs/kit';
-import { supabase } from '$lib/supabase/client.js';
+import { supabase } from '$lib/supabase/supabase.js';
 
 async function createProgram() {
 	const { error } = await supabase.from('programs').insert({ name: 'My Program' });
 	console.log('error: ', error?.message);
 }
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals: { getSession } }) => {
+	let session = await getSession();
+	console.log('\n=> +page.server.ts session userId: ', session?.user.id);
 	return {
 		form: await superValidate(zod(programSchema))
 	};

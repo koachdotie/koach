@@ -1,7 +1,12 @@
-/** @type {import('./$types').LayoutLoad} */
-export declare function load({ url }: {
-    url: any;
-}): Promise<{
-    getAuthUser: () => Promise<unknown>;
-    url: any;
+export declare const load: ({
+	fetch,
+	data,
+	depends
+}: {
+	fetch: any;
+	data: any;
+	depends: any;
+}) => Promise<{
+	supabase: import('@supabase/supabase-js').SupabaseClient<any, 'public', any>;
+	session: import('@supabase/gotrue-js').Session | null;
 }>;

@@ -1,5 +1,8 @@
 <script lang="ts">
 	import Auth from '$lib/components/custom/auth/auth.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 </script>
 
 <title>Sign Up - Koach</title>
@@ -30,7 +33,7 @@
 				<h1 class="text-2xl font-semibold tracking-tight">Create an account</h1>
 				<p class="text-sm text-muted-foreground">Choose a platform to create your account with.</p>
 			</div>
-			<Auth />
+			<Auth {data} />
 			<p class="px-8 text-center text-sm text-muted-foreground">
 				By continuing, you are agreeing to our
 				<a
