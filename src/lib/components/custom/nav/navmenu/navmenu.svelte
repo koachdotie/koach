@@ -3,21 +3,26 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { MoonIcon, SunIcon } from 'lucide-svelte';
-	import { goto, invalidateAll } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { toggleMode } from 'mode-watcher';
 	import FeedbackPopover from './feedback-popover.svelte';
+	import type { PageData } from '../../../../../routes/(app)/$types';
 
-	export let data: any;
+	export let data: PageData;
 
 	let { supabase } = data;
 	$: ({ supabase } = data);
 
 	const handleSignOut = async () => {
 		await supabase.auth.signOut();
-		invalidateAll();
+		goto('/auth', { invalidateAll: true });
 	};
 
-	var user: any;
+	// Info for the dropdown menu
+	$: user = data.session?.user;
+	$: name = user?.user_metadata?.full_name || '';
+	$: email = user?.email || '';
+	$: avatarUrl = user?.user_metadata?.avatar_url || '';
 
 	let loading: boolean | undefined = true;
 	let loggedIn: boolean | undefined = false;
@@ -39,7 +44,7 @@
 
 		<Button variant="ghost" builders={[builder]} class="relative !m-2 !mr-4 h-8 w-8 rounded-full">
 			<Avatar.Root class="h-8 w-8">
-				<Avatar.Image src={user ? user.photoURL : ''} alt="@shadcn"></Avatar.Image>
+				<Avatar.Image src={avatarUrl} alt="@shadcn"></Avatar.Image>
 			</Avatar.Root>
 		</Button>
 	</DropdownMenu.Trigger>
@@ -47,9 +52,9 @@
 		<DropdownMenu.Label class="font-normal">
 			<div class="flex flex-col space-y-1">
 				<!-- Use user.email or a placeholder if user is not available -->
-				<p class="text-sm font-medium leading-none">{user ? user.displayName : 'User'}</p>
+				<p class="text-sm font-medium leading-none">{name}</p>
 				<p class="text-xs leading-none text-muted-foreground">
-					{user ? user.email : 'user@example.com'}
+					{email}
 				</p>
 			</div>
 		</DropdownMenu.Label>

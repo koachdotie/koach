@@ -5,7 +5,7 @@ export const load = async ({ fetch, data, depends }) => {
 
 	const supabase = createBrowserClient(
 		import.meta.env.VITE_SUPABASE_URL,
-		import.meta.env.VITE_SUPABASE_KEY,
+		import.meta.env.VITE_SUPABASE_ANON_KEY,
 		{
 			global: {
 				fetch
@@ -26,6 +26,6 @@ export const load = async ({ fetch, data, depends }) => {
 	const {
 		data: { session }
 	} = await supabase.auth.getSession();
-
+	console.log('\n=> +layout.ts session userId: ', session?.user.id);
 	return { supabase, session };
 };

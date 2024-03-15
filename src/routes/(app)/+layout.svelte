@@ -2,9 +2,9 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import Navmenu from '$lib/components/custom/nav/navmenu/navmenu.svelte';
 	import Sidebar from '$lib/components/custom/nav/sidebar/sidebar.svelte';
-	import type { LayoutData } from './$types.js';
+	import type { PageData } from './$types.js';
 
-	export let data: LayoutData;
+	export let data: PageData;
 
 	let loading: boolean = true;
 	let loggedIn: boolean = false;

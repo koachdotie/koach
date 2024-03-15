@@ -6,8 +6,14 @@
 	import { programSchema, type Program } from '$lib/data/program/program-scheme';
 	import { z } from 'zod';
 	import type { PageData } from './$types';
+	import { onMount } from 'svelte';
 
 	export let data: PageData;
+
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
+
+	console.log('\n=> +page.svelte session userId: ', session?.user.id);
 
 	let programData: Program[] = z.array(programSchema).parse(rawdata);
 	$: if (rawdata) {

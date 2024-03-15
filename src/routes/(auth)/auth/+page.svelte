@@ -1,7 +1,8 @@
 <script lang="ts">
 	import Auth from '$lib/components/custom/auth/auth.svelte';
+	import type { PageData } from './$types';
 
-	export let data: any;
+	export let data: PageData;
 </script>
 
 <title>Sign Up - Koach</title>

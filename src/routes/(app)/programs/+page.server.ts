@@ -11,7 +11,9 @@ async function createProgram() {
 	console.log('error: ', error?.message);
 }
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals: { getSession } }) => {
+	let session = await getSession();
+	console.log('\n=> +page.server.ts session userId: ', session?.user.id);
 	return {
 		form: await superValidate(zod(programSchema))
 	};
