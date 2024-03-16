@@ -6,7 +6,6 @@
 	import { programSchema, type Program } from '$lib/data/program/program-scheme';
 	import { z } from 'zod';
 	import type { PageData } from './$types';
-	import { onMount } from 'svelte';
 
 	export let data: PageData;
 

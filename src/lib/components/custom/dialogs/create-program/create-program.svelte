@@ -9,19 +9,32 @@
 	import * as Form from '$lib/components/ui/form';
 	import * as Select from '$lib/components/ui/select';
 	import { Textarea } from '$lib/components/ui/textarea';
+	import type { PageData } from '../../../../../routes/(app)/$types';
+	import { createProgram } from '$lib/supabase/supabase';
 
 	export let dialogData: SuperValidated<Infer<ProgramFormSchema>>;
+
+	export let data: PageData;
+
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
 
 	const form = superForm(dialogData, {
 		validators: zodClient(createProgramSchema),
 		onUpdated: ({ form: f }) => {
 			if (f.valid) {
 				console.info('You submitted' + JSON.stringify(f.data, null, 2));
-				// toast.success('You submitted' + JSON.stringify(f.data, null, 2));
+				// createProgram(f.data);
 			} else {
 				console.error('Please fix the errors in the form.');
-				// toast.error('Please fix the errors in the form.');
 			}
+		},
+		onSubmit: ({ action, formData, formElement, controller, submitter, cancel }) => {
+			console.log("dialogData: ", dialogData)
+			createProgram(dialogData.data).catch((error) => {
+				console.error('Error creating program:', error);
+				// do some stuff here
+			});
 		}
 	});
 
