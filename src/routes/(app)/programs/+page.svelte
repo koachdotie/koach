@@ -1,29 +1,23 @@
 <script lang="ts">
 	import { GenericDataTable } from '$lib/components/custom/generic-datatable';
-	import rawdata from './programs.json';
 	import type { TableColumnKey } from '$lib/components/custom/generic-datatable/column/column-schema';
-	import { potentialValues } from '../../../lib/data/program/program-enums';
-	import { programSchema, type Program } from '$lib/data/program/program-scheme';
-	import { z } from 'zod';
-	import type { PageData } from './$types';
+	import { potentialValues } from '$lib/data/program/program-enums';
+	import { fetchPrograms } from '$lib/supabase/supabase';
 	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
 
 	export let data: PageData;
 
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
+	$: programs = data.programs;
 
-	console.log('\n=> +page.svelte session userId: ', session?.user.id);
-
-	let programData: Program[] = z.array(programSchema).parse(rawdata);
-	$: if (rawdata) {
-		try {
-			const parsedData = z.array(programSchema).parse(rawdata);
-			programData = parsedData;
-		} catch (error) {
-			console.error('Data validation error:', error);
-		}
+	async function refreshPrograms() {
+		programs = await fetchPrograms();
 	}
+
+	onMount(() => {
+        refreshPrograms();
+    });
+
 	let tableColumnKeys: TableColumnKey[] = [
 		{
 			accessor: 'name',
@@ -55,5 +49,5 @@
 			<p class="text-muted-foreground">Blah blah im a cool data table blah</p>
 		</div>
 	</div>
-	<GenericDataTable data={programData} {tableColumnKeys} {potentialValues} pageData={data} />
+	<GenericDataTable data={programs} {tableColumnKeys} {potentialValues} pageData={data} />
 </div>

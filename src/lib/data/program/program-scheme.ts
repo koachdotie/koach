@@ -62,13 +62,13 @@ export const modalityEnum = z.enum([
 export const experienceLevelEnum = z.enum(['Beginner', 'Intermediate', 'Advanced']);
 
 export const programSchema = z.object({
-	uid: z.string().uuid(),
-	clientUid: z.string().uuid().optional(),
+	id: z.string().uuid(),
+	clientId: z.string().uuid().optional(),
 	name: z.string(),
 	description: z.string(),
 	modality: modalityEnum,
 	experienceLevel: experienceLevelEnum,
-	days: z.array(z.object({}))
+	days: z.array(z.object({})).optional()
 });
 
 export type Program = z.infer<typeof programSchema>;

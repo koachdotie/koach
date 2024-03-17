@@ -26,6 +26,6 @@ export const load = async ({ fetch, data, depends }) => {
 	const {
 		data: { session }
 	} = await supabase.auth.getSession();
-	console.log('\n=> +layout.ts session userId: ', session?.user.id);
+	// console.log('\n=> +layout.ts session userId: ', session?.user.id);
 	return { supabase, session };
 };

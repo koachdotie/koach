@@ -28,7 +28,7 @@
 			bind:value={$filterValue}
 		/>
 
-		<CreateProgram dialogData={pageData.form} />
+		<CreateProgram dialogData={pageData.form} data={pageData} />
 	</div>
 
 	<ViewOptions {tableModel} {hidableCols} />

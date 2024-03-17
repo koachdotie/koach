@@ -1,13 +1,13 @@
+import type { Database } from '$lib/supabase/database.types';
 import '$lib/supabase/supabase';
 import { createServerClient } from '@supabase/ssr';
-import { redirect } from '@sveltejs/kit';
 
-const unprotectedRoutes = ['/auth'];
-const protectedRoutes = ['/', '/programs', '/workouts', '/exercises'];
+// const unprotectedRoutes = ['/auth'];
+// const protectedRoutes = ['/', '/programs', '/workouts', '/exercises'];
 
 export async function handle({ event, resolve }): Promise<Response> {
-	console.log('\nurl: ', event.url.pathname);
-	event.locals.supabase = createServerClient(
+	console.log('\nfetching enpoint:', event.url.pathname);
+	event.locals.serverSupabase = createServerClient<Database>(
 		import.meta.env.VITE_SUPABASE_URL,
 		import.meta.env.VITE_SUPABASE_ANON_KEY,
 		{
@@ -26,12 +26,12 @@ export async function handle({ event, resolve }): Promise<Response> {
 	event.locals.getSession = async () => {
 		const {
 			data: { session }
-		} = await event.locals.supabase.auth.getSession();
+		} = await event.locals.serverSupabase.auth.getSession();
 		return session;
 	};
 
 	let session = await event.locals.getSession();
-	console.log('\n=> hooks.server.ts session userId: ', session?.user.id);
+	// console.log('\n=> hooks.server.ts session userId: ', session?.user.id);
 
 	return resolve(event, {
 		filterSerializedResponseHeaders(name) {
