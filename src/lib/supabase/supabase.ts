@@ -54,7 +54,7 @@ export async function createProgram(
 }
 
 export async function fetchPrograms(): Promise<Program[]> {
-	console.info("\n=> fetching programs")
+	console.info('\n=> fetching programs');
 	let { data: programs, error } = await supabase.from('programs').select('*');
 
 	if (programs && !error) {

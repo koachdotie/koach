@@ -15,8 +15,8 @@
 	}
 
 	onMount(() => {
-        refreshPrograms();
-    });
+		refreshPrograms();
+	});
 
 	let tableColumnKeys: TableColumnKey[] = [
 		{
