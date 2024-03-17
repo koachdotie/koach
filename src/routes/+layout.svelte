@@ -19,7 +19,7 @@
 				}
 			});
 			subscription = data.subscription;
-			console.log('\n=> +layout.svelte session userId: ', session?.user.id);
+			// console.log('\n=> +layout.svelte session userId: ', session?.user.id);
 		}
 	});
 

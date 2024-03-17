@@ -1,7 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type PostgrestError } from '@supabase/supabase-js';
 import type { Database } from './database.types';
 import type { Infer } from 'sveltekit-superforms';
 import type { ProgramFormSchema } from '$lib/components/custom/dialogs/create-program/schema';
+import { type Program } from '$lib/data/program/program-scheme';
 const options = {
 	auth: {
 		persistSession: true,
@@ -9,7 +10,6 @@ const options = {
 	}
 };
 
-// Create a single supabase client for interacting with your database
 export const supabase = createClient<Database>(
 	import.meta.env.VITE_SUPABASE_URL,
 	import.meta.env.VITE_SUPABASE_ANON_KEY,
@@ -18,25 +18,49 @@ export const supabase = createClient<Database>(
 
 export async function createProgram(
 	program: Infer<ProgramFormSchema>
-): Promise<string | undefined> {
+): Promise<PostgrestError | undefined> {
 	try {
-		console.log('Creating program:', program);
-
-		const { data, error } = await supabase.from('programs').insert({
-			name: program.name,
-			description: program.description,
-			modality: program.modality,
-			experienceLevel: program.experienceLevel
-		});
+		const { data, error } = await supabase
+			.from('programs')
+			.insert({
+				name: program.name,
+				description: program.description,
+				modality: program.modality,
+				experienceLevel: program.experienceLevel
+			})
+			.select('*');
 
 		if (error) {
 			console.error('Error creating program:', error.message);
-			return error.message;
+			return error;
 		}
 
-		console.log('Program created successfully:', data);
+		if (!data) {
+			console.error('Error creating program: no data returned');
+			return {
+				code: '500',
+				message:
+					'No data returned during program creation. Program may? have been created successfully',
+				details: '',
+				hint: ''
+			};
+		}
+
+		console.log('Program created successfully');
 	} catch (error) {
 		console.error('Unexpected error creating program:', error);
-		return 'An unexpected error occurred while creating the program.';
+		return error as PostgrestError;
+	}
+}
+
+export async function fetchPrograms(): Promise<Program[]> {
+	console.info("\n=> fetching programs")
+	let { data: programs, error } = await supabase.from('programs').select('*');
+
+	if (programs && !error) {
+		return programs;
+	} else {
+		console.error('Error fetching programs:', error);
+		return [];
 	}
 }

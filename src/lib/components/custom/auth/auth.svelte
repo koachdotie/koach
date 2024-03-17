@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { cn } from '$lib/utils/utils.js';
+	import { cn } from '$lib/utils.js';
 	import { page } from '$app/stores';
 	import { afterRegister } from '$lib/helpers/route.helper';
 	import { LoaderIcon } from 'lucide-svelte';

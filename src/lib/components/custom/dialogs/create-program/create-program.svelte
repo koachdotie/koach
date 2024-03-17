@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import * as Dialog from '$lib/components/ui/dialog';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { Input } from '$lib/components/ui/input';
 	import { SquarePen } from 'lucide-svelte';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
@@ -9,8 +9,8 @@
 	import * as Form from '$lib/components/ui/form';
 	import * as Select from '$lib/components/ui/select';
 	import { Textarea } from '$lib/components/ui/textarea';
-	import type { PageData } from '../../../../../routes/(app)/$types';
-	import { createProgram } from '$lib/supabase/supabase';
+	import type { PageData } from '../../../../../routes/(app)/programs/$types';
+	import { createProgram, fetchPrograms } from '$lib/supabase/supabase';
 
 	export let dialogData: SuperValidated<Infer<ProgramFormSchema>>;
 
@@ -21,20 +21,26 @@
 
 	const form = superForm(dialogData, {
 		validators: zodClient(createProgramSchema),
-		onUpdated: ({ form: f }) => {
+		onUpdated: async ({ form: f }) => {
 			if (f.valid) {
 				console.info('You submitted' + JSON.stringify(f.data, null, 2));
-				// createProgram(f.data);
+
+				createProgram(f.data).catch((error) => {
+					console.error('Error creating program:', error);
+				});
+
+				fetchPrograms().then((programs) => {
+					data.programs = programs;
+				});
 			} else {
 				console.error('Please fix the errors in the form.');
 			}
 		},
-		onSubmit: ({ action, formData, formElement, controller, submitter, cancel }) => {
-			console.log("dialogData: ", dialogData)
-			createProgram(dialogData.data).catch((error) => {
-				console.error('Error creating program:', error);
-				// do some stuff here
-			});
+		onError: (error) => {
+			console.error('Error:', error);
+		},
+		onResult(event) {
+			console.log('Result:', event);
 		}
 	});
 
@@ -55,20 +61,20 @@
 		: undefined;
 </script>
 
-<Dialog.Root>
-	<Dialog.Trigger let:builder>
+<AlertDialog.Root>
+	<AlertDialog.Trigger let:builder>
 		<Button builders={[builder]} variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex">
 			<SquarePen class="mr-2 h-4 w-4" />
 			Create
 		</Button>
-	</Dialog.Trigger>
-	<Dialog.Content class="sm:max-w-[425px]">
-		<Dialog.Header>
-			<Dialog.Title>Create Program</Dialog.Title>
-			<Dialog.Description>
+	</AlertDialog.Trigger>
+	<AlertDialog.Content class="sm:max-w-[425px]">
+		<AlertDialog.Header>
+			<AlertDialog.Title>Create Program</AlertDialog.Title>
+			<AlertDialog.Description>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-			</Dialog.Description>
-		</Dialog.Header>
+			</AlertDialog.Description>
+		</AlertDialog.Header>
 
 		<form method="POST" use:enhance>
 			<Form.Field {form} name="name">
@@ -81,7 +87,6 @@
 			<Form.Field {form} name="description">
 				<Form.Control let:attrs>
 					<Form.Label>Description</Form.Label>
-					<!-- <Input {...attrs} bind:value={$formData.description} /> -->
 					<Textarea
 						{...attrs}
 						bind:value={$formData.description}
@@ -146,14 +151,18 @@
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
-			<Dialog.Footer class="mt-8">
-				<Form.Button variant="destructive" size="sm" class="mr-auto hidden h-8 lg:flex"
-					>Cancel</Form.Button
+			<AlertDialog.Footer class="mt-8">
+				<AlertDialog.Cancel class="ml-auto hidden h-8 lg:flex">
+					<!-- <Form.Button variant="destructive" size="sm" class="mr-auto hidden h-8 lg:flex"
+						>Cancel</Form.Button -->
+					Cancel</AlertDialog.Cancel
 				>
-				<Form.Button variant="secondary" size="sm" class="ml-auto hidden h-8 lg:flex"
-					>Create</Form.Button
-				>
-			</Dialog.Footer>
+				<AlertDialog.Action type="submit" class="ml-auto hidden h-8 lg:flex">
+					<!-- <Form.Button variant="ghost" size="sm" class="ml-auto hidden h-8 lg:flex"
+						>Create</Form.Button -->
+					Create
+				</AlertDialog.Action>
+			</AlertDialog.Footer>
 		</form>
-	</Dialog.Content>
-</Dialog.Root>
+	</AlertDialog.Content>
+</AlertDialog.Root>
