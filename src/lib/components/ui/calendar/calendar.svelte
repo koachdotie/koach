@@ -9,7 +9,7 @@
 
 	export let value: $$Props["value"] = undefined;
 	export let placeholder: $$Props["placeholder"] = undefined;
-	export let weekdayFormat: $$Props["weekdayFormat"] = "short";
+	export let weekdayFormat: $$Props["weekdayFormat"] = "long";
 
 	let className: $$Props["class"] = undefined;
 	export { className as class };
@@ -37,7 +37,7 @@
 					<Calendar.GridRow class="flex">
 						{#each weekdays as weekday}
 							<Calendar.HeadCell>
-								{weekday.slice(0, 2)}
+								{weekday}
 							</Calendar.HeadCell>
 						{/each}
 					</Calendar.GridRow>
