@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { cn } from "$lib/utils.js";
-	import type { HTMLAttributes } from "svelte/elements";
-	import { CircleEllipsis, ShieldEllipsis } from "lucide-svelte";
+	import { cn } from '$lib/utils.js';
+	import type { HTMLAttributes } from 'svelte/elements';
+	import { CircleEllipsis, ShieldEllipsis } from 'lucide-svelte';
 
 	type $$Props = HTMLAttributes<HTMLSpanElement> & {
 		el?: HTMLSpanElement;
 	};
 
-	export let el: $$Props["el"] = undefined;
-	let className: $$Props["class"] = undefined;
+	export let el: $$Props['el'] = undefined;
+	let className: $$Props['class'] = undefined;
 	export { className as class };
 </script>
 
@@ -16,7 +16,7 @@
 	bind:this={el}
 	role="presentation"
 	aria-hidden="true"
-	class={cn("flex h-9 w-9 items-center justify-center", className)}
+	class={cn('flex h-9 w-9 items-center justify-center', className)}
 	{...$$restProps}
 >
 	<ShieldEllipsis class="h-4 w-4" />

@@ -22,11 +22,6 @@
 </script>
 
 <div class={cn('border-r pb-12', className)}>
-	<h2
-		class="mx-2 scroll-m-20 p-4 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0"
-	>
-		KOACH
-	</h2>
 	<div class="space-y-4 px-3 py-4">
 		<h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Library</h2>
 		<!-- 

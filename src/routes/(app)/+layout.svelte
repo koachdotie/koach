@@ -12,24 +12,29 @@
 
 <ModeWatcher />
 
-<div class="min-h-screen md:flex md:flex-row">
-	<div class="border-t bg-background md:w-64">
-		<Sidebar />
+<div class="relative">
+	<!-- Sticky Navmenu at the top -->
+	<div
+		class="sticky top-0 z-50 flex items-center justify-between overflow-hidden rounded-[0.5rem] border bg-background p-2 shadow-xl"
+	>
+		<div class="flex items-center justify-start">
+			<h2 class="ml-4 text-3xl font-semibold tracking-tight transition-colors">KOACH</h2>
+		</div>
+
+		<div class="flex items-center justify-end">
+			<Navmenu {data} />
+		</div>
 	</div>
 
-	<div class="flex-1">
-		<div class="hidden md:block">
-			<div class="border-t bg-background">
-				<div class="relative flex min-h-screen flex-col">
-					<div class="ml-auto flex items-center space-x-4">
-						<Navmenu {data} />
-					</div>
-					<div class="overflow-hidden rounded-[0.5rem] border bg-background shadow-xl"></div>
+	<!--Sidebar and Slot -->
+	<div class="flex min-h-screen">
+		<div class="fixed z-40 h-full w-52 border-r bg-background">
+			<Sidebar />
+		</div>
 
-					<div class="m-8">
-						<slot />
-					</div>
-				</div>
+		<div class="ml-52 flex-1">
+			<div class="m-8 h-full overflow-auto">
+				<slot />
 			</div>
 		</div>
 	</div>

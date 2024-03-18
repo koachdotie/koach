@@ -54,29 +54,23 @@ export async function createProgram(
 }
 
 export async function fetchPrograms(): Promise<Program[]> {
-	console.info('\n=> fetching programs');
 	let { data: programs, error } = await supabase.from('programs').select('*');
 
 	if (programs && !error) {
 		return programs;
 	} else {
-		console.error('Error fetching programs:', error);
+		console.error('Error fetching programs with error: ', error);
 		return [];
 	}
 }
 
 export async function fetchProgram(id: string): Promise<Program | undefined> {
-	console.info('\n=> fetching program');
-	let { data: program, error } = await supabase
-		.from('programs')
-		.select('*')
-		.eq('id', id)
-		.single();
+	let { data: program, error } = await supabase.from('programs').select('*').eq('id', id).single();
 
 	if (program && !error) {
 		return program;
 	} else {
-		console.error('Error fetching program:', error);
+		console.error(`Error fetching program ${id} with error: `, error);
 		return undefined;
 	}
 }
