@@ -26,7 +26,9 @@
 					</div>
 					<div class="overflow-hidden rounded-[0.5rem] border bg-background shadow-xl"></div>
 
-					<slot />
+					<div class="m-8">
+						<slot />
+					</div>
 				</div>
 			</div>
 		</div>

@@ -15,6 +15,7 @@
 	const enumValue = potentialValues.find((enumValue) => enumValue.value === value);
 </script>
 
+
 {#if enumValue}
 	<div class="flex items-center">
 		{#if enumValue.icon}

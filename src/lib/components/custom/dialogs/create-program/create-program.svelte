@@ -63,7 +63,7 @@
 
 <AlertDialog.Root>
 	<AlertDialog.Trigger let:builder>
-		<Button builders={[builder]} variant="outline" size="sm" class="ml-auto hidden h-8 lg:flex">
+		<Button builders={[builder]} variant="secondary" size="sm" class="ml-auto hidden h-8 lg:flex">
 			<SquarePen class="mr-2 h-4 w-4" />
 			Create
 		</Button>

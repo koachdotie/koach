@@ -16,6 +16,7 @@
 	import { type EnumValueScheme } from './row/generic-cell.svelte';
 
 	import type { PageData } from '../../../../routes/(app)/programs/$types';
+	import { goto } from '$app/navigation';
 
 	// A list of the actual data fetched from firestore
 	export let data: any[];
@@ -145,7 +146,11 @@
 			<Table.Body {...$tableBodyAttrs}>
 				{#each $pageRows as row (row.id)}
 					<Subscribe rowAttrs={row.attrs()} let:rowAttrs>
-						<Table.Row {...rowAttrs}>
+						<Table.Row {...rowAttrs} class="hover:cursor-pointer" on:click={() => {
+							if (row.isData() && row.original) {
+								goto(`/programs/${row.original.id}`);
+							}
+						}}>
 							{#each row.cells as cell (cell.id)}
 								<Subscribe attrs={cell.attrs()} let:attrs>
 									<Table.Cell {...attrs}>

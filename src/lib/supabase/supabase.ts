@@ -64,3 +64,19 @@ export async function fetchPrograms(): Promise<Program[]> {
 		return [];
 	}
 }
+
+export async function fetchProgram(id: string): Promise<Program | undefined> {
+	console.info('\n=> fetching program');
+	let { data: program, error } = await supabase
+		.from('programs')
+		.select('*')
+		.eq('id', id)
+		.single();
+
+	if (program && !error) {
+		return program;
+	} else {
+		console.error('Error fetching program:', error);
+		return undefined;
+	}
+}

@@ -5,6 +5,7 @@
 	import { HomeIcon, NotebookTabs } from 'lucide-svelte';
 	import { cubicInOut } from 'svelte/easing';
 	import { crossfade } from 'svelte/transition';
+	import { includes } from 'valibot';
 
 	let className: string | null | undefined = undefined;
 	export { className as class };
@@ -34,8 +35,9 @@
 		 -->
 		<div class="space-y-1">
 			{#each library as item}
-				{@const isActive = $page.url.pathname === item.href}
-
+				{@const isActive =
+					$page.url.pathname === item.href ||
+					($page.url.pathname.startsWith(item.href) && item.href !== '/')}
 				<div class="!my-4">
 					<Button
 						href={item.href}
