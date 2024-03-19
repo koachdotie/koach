@@ -2,7 +2,7 @@ import { createClient, type PostgrestError } from '@supabase/supabase-js';
 import type { Database } from './database.types';
 import type { Infer } from 'sveltekit-superforms';
 import type { ProgramFormSchema } from '$lib/components/custom/dialogs/create-program/schema';
-import { type Program } from '$lib/data/program/program-scheme';
+import { type Program } from '$lib/data/program-scheme';
 const options = {
 	auth: {
 		persistSession: true,

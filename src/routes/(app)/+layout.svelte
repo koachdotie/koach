@@ -27,15 +27,13 @@
 	</div>
 
 	<!--Sidebar and Slot -->
-	<div class="flex min-h-screen">
+	<div class="flex max-h-screen">
 		<div class="fixed z-40 h-full w-52 border-r bg-background">
 			<Sidebar />
 		</div>
 
-		<div class="ml-52 flex-1">
-			<div class="m-8 h-full overflow-auto">
-				<slot />
-			</div>
+		<div class="flex-1 pl-52">
+			<slot />
 		</div>
 	</div>
 </div>

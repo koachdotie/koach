@@ -1,5 +1,5 @@
 import type { EnumValueScheme } from '$lib/components/custom/generic-datatable/row/generic-cell.svelte';
-import { experienceLevels, modalities } from '$lib/data/program/program-scheme';
+import { experienceLevels, modalities } from '$lib/data/program-scheme';
 
 export const potentialValues: Map<string, EnumValueScheme[]> = new Map([
 	['modality', modalities],

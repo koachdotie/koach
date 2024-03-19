@@ -2,10 +2,9 @@
 	import { page } from '$app/stores';
 	import { Button } from '$lib/components/ui/button';
 	import { cn } from '$lib/utils.js';
-	import { HomeIcon, NotebookTabs } from 'lucide-svelte';
+	import { HomeIcon, NotebookTabs, Send } from 'lucide-svelte';
 	import { cubicInOut } from 'svelte/easing';
 	import { crossfade } from 'svelte/transition';
-	import { includes } from 'valibot';
 
 	let className: string | null | undefined = undefined;
 	export { className as class };
@@ -33,7 +32,7 @@
 				{@const isActive =
 					$page.url.pathname === item.href ||
 					($page.url.pathname.startsWith(item.href) && item.href !== '/')}
-				<div class="!my-4">
+				<div class="!my-42">
 					<Button
 						href={item.href}
 						variant="ghost"

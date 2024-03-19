@@ -1,6 +1,6 @@
 import type { Actions, PageServerLoad } from './$types.js';
 import { superValidate } from 'sveltekit-superforms';
-import { programSchema } from '$lib/data/program/program-scheme.js';
+import { programSchema } from '$lib/data/program-scheme.js';
 import { zod } from 'sveltekit-superforms/adapters';
 import { createProgramSchema } from '../../../lib/components/custom/dialogs/create-program/schema';
 import { fail } from '@sveltejs/kit';

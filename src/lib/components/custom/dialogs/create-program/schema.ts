@@ -1,4 +1,4 @@
-import { experienceLevelEnum, modalityEnum } from '$lib/data/program/program-scheme';
+import { experienceLevelEnum, modalityEnum } from '$lib/data/program-scheme';
 import { z } from 'zod';
 
 export const createProgramSchema = z.object({
